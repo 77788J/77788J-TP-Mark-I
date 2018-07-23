@@ -26,7 +26,7 @@ Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float
     // custom sensor
     case (custom): _customInit();
 
-    // added cause warnings are annoying
+    // added cause compiler warnings are annoying
     default: break;
   }
 }
@@ -116,7 +116,7 @@ void Sensor :: update() {
       value = customUpdate();
     } break;
 
-    default: print("WTF"); break;
+    default: print("wtf"); break;
   }
 
   // push new value to history
