@@ -9,7 +9,7 @@ void Joystick :: init(int joystick_) {
   updated = 0;
 }
 
-// updates the j variables
+// updates the stored variables
 void Joystick :: update() {
 
   // save raw joystick button data
@@ -54,7 +54,7 @@ void Joystick :: update() {
   btn8L = raw_8L;
   btn8R = raw_8R;
 
-  // update analog sticks
+  // update analog sticks (range of -100:100)
   analogRH = (float) joystickGetAnalog(j, 1) * 0.787401575f;
   analogRV = (float) joystickGetAnalog(j, 2) * 0.787401575f;
   analogLV = (float) joystickGetAnalog(j, 3) * 0.787401575f;

@@ -42,6 +42,7 @@ void Lcd :: updateButtons() {
   int btn_m_raw = (btns_raw >> 1) & 1; // gets second bit
   int btn_r_raw = (btns_raw >> 2) & 1; // gets third bit
 
+  // old code that does the same thing as above but in a less cool way
   // bool btn_l_raw = (b == 4 || b == 5 || b == 6 || b == 7); // first button?
   // bool btn_m_raw = (b == 2 || b == 3 || b == 6 || b == 7); // second button?
   // bool btn_r_raw = (b == 1 || b == 3 || b == 5 || b == 7); //third button?
