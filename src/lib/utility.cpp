@@ -8,14 +8,22 @@ int sign(float x) {
 
 // returns the lesser of two values
 float min(float a, float b) {
-  if (a < b) return a;
-  else return b;
+  return (a < b) ? a : b;
 }
 
 // returns the greater of two values
 float max(float a, float b) {
-  if (a > b) return a;
-  else return b;
+  return (a > b) ? a : b;
+}
+
+// returns the lesser of two values' magnitudes (ignores sign)
+float minMag(float a, float b) {
+  return (fabs(a) < fabs(b)) ? a : b;
+}
+
+// returns the greater of two values' magnitudes (ignores sign)
+float minMag(float a, float b) {
+  return (fabs(a) > fabs(b)) ? a : b;
 }
 
 // constrains a value between two values
