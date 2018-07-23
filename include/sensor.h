@@ -19,7 +19,7 @@ extern "C" {
 #define SONAR_MAX 300.f
 
 // sensor types
-enum SensorType {digital, sonar, encoder, ime, potentiometer, gyro, light};
+enum SensorType {digital, sonar, encoder, ime, potentiometer, gyro, light, custom};
 
 class Sensor {
 
@@ -39,7 +39,9 @@ public:
   float extra_data;
 
   // initialize sensor
-  Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data1);
+  // > leave _customInit and _customUpdate null if not using custom sensor
+  // > leave _extra_data null if no extra data is required
+  Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)());
 
   // returns the sensor value x intervals ago (0 is current)
   float getValue(int x);
@@ -59,6 +61,9 @@ private:
   Ultrasonic sonar_sensor;
   Encoder encoder_sensor;
   Gyro gyro_sensor;
+
+  // pointer to update function of custom sensor
+  float (*customUpdate)();
 
   // array of size SENSOR_HISTORY storing the history of sensor values
   float history[SENSOR_HISTORY];

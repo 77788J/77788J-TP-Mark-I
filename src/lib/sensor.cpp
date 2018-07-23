@@ -1,7 +1,7 @@
 #include "sensor.h"
 
 // initialize sensor
-Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data) {
+Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)()) {
 
   // set variables
   type = _type;
@@ -9,6 +9,7 @@ Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float
   port2 = _port2;
   reversed = _reversed;
   extra_data = _extra_data;
+  customUpdate = _customUpdate;
 
   // init specific sensors
   switch (type) {
@@ -21,6 +22,9 @@ Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float
 
     // gyro
     case (gyro): gyro_sensor = gyroInit(port1, extra_data);
+
+    // custom sensor
+    case (custom): _customInit();
 
     // added cause warnings are annoying
     default: break;
@@ -105,6 +109,11 @@ void Sensor :: update() {
     case (light): {
       value = analogRead(port1);
       if (reversed) value = 4095.f - value; // invert if reversed
+    } break;
+
+    // custom sensor
+    case (custom): {
+      value = customUpdate();
     } break;
 
     default: print("WTF"); break;
