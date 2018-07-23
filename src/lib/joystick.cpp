@@ -61,5 +61,5 @@ void Joystick :: update() {
   analogLH = (float) joystickGetAnalog(j, 4) * 0.787401575f;
 
   // update time when last updated
-  updated = time;
+  updated = millis();
 }
