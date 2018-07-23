@@ -22,7 +22,7 @@ float minMag(float a, float b) {
 }
 
 // returns the greater of two values' magnitudes (ignores sign)
-float minMag(float a, float b) {
+float maxMag(float a, float b) {
   return (fabs(a) > fabs(b)) ? a : b;
 }
 

@@ -10,7 +10,9 @@ extern "C" {
 int sign(float x);
 float min(float a, float b);
 float max(float a, float b);
-float limit(float val, float min, float max);
+float minMag(float a, float b);
+float maxMag(float a, float b);
+float clamp(float val, float min, float max);
 float wrap(float val, float min, float max);
 float calcRpm(float error, int interval);
 

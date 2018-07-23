@@ -1,7 +1,7 @@
 # Makefile for compiling PROS projects
 
 # Path to project root (NO trailing slash!)
-ROOT=..
+ROOT=../..
 # Binary output directory
 BINDIR=$(ROOT)/bin
 
