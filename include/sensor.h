@@ -21,6 +21,14 @@ extern "C" {
 // sensor types
 enum SensorType {digital, sonar, encoder, ime, potentiometer, gyro, light, custom};
 
+// primary sensor class
+// this class is basically a wrapper for all Vex sensors (excluding the accelerometer)
+// it also allows you to utilize custom sensors with it, as long as your function return a single float
+// > logic for initializing and updating sensor data is provided via function pointers
+// > groups of sensors can also be considered custom sensors
+// > e.g. a lift has an encoder for accurate, precise height data and a potentiometer to periodically calibrate it
+// > as long as you provide the logic, this class treats groups as a single sensor
+// > this is important, as this Sensor class is used in my 'smart' motor class for velocity and posititon data
 class Sensor {
 
 public:
