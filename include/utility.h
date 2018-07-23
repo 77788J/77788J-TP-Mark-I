@@ -6,10 +6,6 @@ extern "C" {
 #endif
 
 #include <main.h>
-#include <limits.h>
-
-#define NONE 0
-#define FLOAT_MAX 3.40282e+38
 
 int sign(float x);
 float min(float a, float b);
