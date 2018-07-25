@@ -1,4 +1,4 @@
-#include "joystick.h"
+#include "lib/joystick.h"
 
 // default initializer
 Joystick :: Joystick() {}

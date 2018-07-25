@@ -1,4 +1,4 @@
-#include "sensor.h"
+#include "lib/motor_sensor/sensor.h"
 
 // initialize sensor
 Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)()) {
