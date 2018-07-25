@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-#include <sensor.h>
-
 // group of motors to sync
 // like drivestraight
 class MotorSyncGroup {
@@ -21,6 +19,9 @@ public:
 
   // amount of motors in group
   int motor_count;
+
+  // initializer
+  MotorSyncGroup(bool _enabled, int *_motors, int _motor_count);
 
   // recalculate the mean motor position
   void updateData();

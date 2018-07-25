@@ -5,18 +5,17 @@
 extern "C" {
 #endif
 
-#include <sensor.h>
-#include <motor_sync_group.h>
+#include <lib/motor_sensor/sensor.h>
+#include <lib/motor_sensor/motor_sync_group.h>
 
-// public array of all motors
-Motor all_motors[12];
-int total_motor_count;
+// max amount of motor objects
+#define MAX_MOTOR_COUNT 10
 
 // function to initialize motor and add to array
 // USE THIS TO INITIALIZE MOTORS
 // DO NOT CALL Motor(...)
 // IT WILL BREAK STUFF
-void motorInit(int *ports, MotorSyncGroup *sync_group, Sensor sensor);
+int motorInit(int *ports, MotorSyncGroup *sync_group, Sensor sensor);
 
 // different control modes a motor may be in
 // > power: raw power control with optional slewing
@@ -38,6 +37,9 @@ class Motor {
 
 public:
 
+  // index of this motor in motors array
+  int id;
+
   // array of all ports associated with one Motor obj
   int ports[12];
 
@@ -56,7 +58,7 @@ public:
   // DO NOT CALL THIS
   // CALL motorInit(...)
   // USING THIS WILL BREAK STUFF
-  Motor(int _ports[12], MotorSyncGroup *_sync_group, Sensor *_sensor);
+  void init(int _ports[12], MotorSyncGroup *_sync_group, Sensor *_sensor);
 
   // update motor statistics (velocity, position, etc)
   void updateStats();
@@ -86,9 +88,6 @@ public:
 
 private:
 
-  // index of this motor in motors array
-  int id;
-
   // sensor associated with this motor
   Sensor *sensor;
 
@@ -111,6 +110,10 @@ private:
   float target_velocity;
 
 };
+
+// array of all motors in project
+int all_motors_count = 0;
+Motor all_motors[MAX_MOTOR_COUNT];
 
 #ifdef __cplusplus
 }
