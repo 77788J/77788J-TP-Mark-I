@@ -18,6 +18,12 @@ extern "C" {
 #define SONAR_MIN 3.f
 #define SONAR_MAX 300.f
 
+// calculates the acceleration of a value given its history
+float calcAccel(int *history, int size);
+
+// calculates the valocity of a value given its history
+float calcVel(int *history, int size, float accel);
+
 // sensor types
 enum SensorType {digital, sonar, encoder, ime, potentiometer, gyro, light, custom};
 
@@ -54,6 +60,12 @@ public:
   // returns the sensor value x intervals ago (0 is current)
   float getValue(int x);
 
+  // returns the current velocity
+  float getVelocity();
+
+  // returns the current acceleration
+  float getAcceleration();
+
   // returns the type of sensor
   SensorType getType();
 
@@ -72,6 +84,10 @@ private:
 
   // pointer to update function of custom sensor
   float (*customUpdate)();
+
+  // velocity and acceleration of sensor value
+  float velocity;
+  float acceleration;
 
   // array of size SENSOR_HISTORY storing the history of sensor values
   float history[SENSOR_HISTORY];

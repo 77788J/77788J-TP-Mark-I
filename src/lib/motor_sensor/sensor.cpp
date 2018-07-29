@@ -1,5 +1,39 @@
 #include "lib/motor_sensor/sensor.h"
 
+// calculates the acceleration of a value given its history
+float calcAccel(float *history, int size) {
+
+  // init variables
+  float accel = 0;
+  float sum = 0;
+
+  // calculate acceleration with moving average
+  for (int i = 0; i < size - 2; i++) {
+    accel += ((*(history + i) - *(history + i + 1)) - (*(history + i + 1) - *(history + i + 2))) / ((float)i + 1.f);
+    sum += 1/((float)i + 1.f);
+  }
+
+  // return normalized acceleration
+  return accel / sum;
+}
+
+// calculates the velocity of a value given its history
+float calcVel(float *history, int size, float accel) {
+
+  // init variables
+  float vel = 0;
+  float sum = 0;
+
+  // calculate velocity with moving average (accounting for acceleration)
+  for (int i = 0; i < size - 1; i++) {
+    vel += (*(history + i) - *(history + i + 1) + (accel * i)) / ((float)i + 1.f);
+    sum += 1/((float)i + 1.f);
+  }
+
+  // return normalized valocity
+  return vel / sum;
+}
+
 // initialize sensor
 Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)()) {
 
@@ -35,6 +69,10 @@ Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float
 float Sensor :: getValue(int x) {
   return (x >= 0 && x < SENSOR_HISTORY) ? history[x] : 0;
 }
+
+// get sensor statistics
+float Sensor :: getVelocity() {return velocity;}
+float Sensor :: getAcceleration() {return acceleration;}
 
 // returns the type of sensor
 SensorType Sensor :: getType() {
@@ -122,4 +160,8 @@ void Sensor :: update() {
   // push new value to history
   if (history_initialized) pushValue(value);
   else initHistory(value);
+
+  // update sensor statistics
+  acceleration = calcAccel(history, SENSOR_HISTORY);
+  velocity = calcVel(history, SENSOR_HISTORY, acceleration);
 }
