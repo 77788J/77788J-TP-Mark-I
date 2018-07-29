@@ -15,7 +15,7 @@ extern "C" {
 // USE THIS TO INITIALIZE MOTORS
 // DO NOT CALL Motor(...)
 // IT WILL BREAK STUFF
-int motorInit(int *ports, MotorSyncGroup *sync_group, Sensor sensor);
+int motorInit(int *ports, MotorSyncGroup *sync_group, Sensor *sensor);
 
 // different control modes a motor may be in
 // > power: raw power control with optional slewing
@@ -24,7 +24,7 @@ int motorInit(int *ports, MotorSyncGroup *sync_group, Sensor sensor);
 // > posvel: velocity control via position control
 //    > goes to where it should be if it's travelling at a specified velocity, doesn't directly maintain velocity
 //    > not always correct velocity, but speeds up if it falls behind
-enum MotorMode {power, position, velocity, posvel};
+enum MotorMode {mode_power, mode_position, mode_velocity, mode_posvel};
 
 // 'smart' Motor class
 // one Motor obj can be associated with multiple physical motors
@@ -58,7 +58,7 @@ public:
   // DO NOT CALL THIS
   // CALL motorInit(...)
   // USING THIS WILL BREAK STUFF
-  void init(int _ports[12], MotorSyncGroup *_sync_group, Sensor *_sensor);
+  void init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, int _id);
 
   // update motor statistics (velocity, position, etc)
   void updateStats();
@@ -68,11 +68,13 @@ public:
 
   // get motor data
   float getRawPower();
+  float getPercentPower();
   float getTargetPower();
   float getPosition();
   float getTargetPosition();
   float getVelocity();
   float getTargetVelocity();
+  float getAcceleration();
 
   // sets motor power
   void setPower(float pow, bool update_mode);
@@ -84,7 +86,7 @@ public:
   void setVelocity(float vel, bool update_mode);
 
   // sets motor velocity via position
-  void setPosVel(float pv, bool update_mode);
+  void setPosVel(float vel, bool update_mode);
 
 private:
 
@@ -94,11 +96,14 @@ private:
   // raw power of motor
   int raw_power;
 
+  // percentage power of motor (before truespeed is applied)
+  int percent_power;
+
   // target power of motor
   int target_power;
 
-  // position history of motor (degrees)
-  float position[SENSOR_HISTORY];
+  // position of motor (degrees)
+  float position;
 
   // target position of motor
   float target_position;
@@ -108,6 +113,9 @@ private:
 
   // target velocity of motor
   float target_velocity;
+
+  // acceleration of motor (RPM/interval)
+  float acceleration;
 
 };
 
