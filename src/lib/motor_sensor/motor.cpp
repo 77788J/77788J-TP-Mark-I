@@ -1,7 +1,7 @@
 #include "lib/motor_sensor/motor.h"
 
 // initialize a motor and add it to all_motors array
-int motorInitint(int *ports, MotorSyncGroup *sync_group, Sensor *sensor) {
+int motorInit(int *ports, MotorSyncGroup *sync_group, Sensor *sensor) {
   all_motors[all_motors_count].init(ports, sync_group, sensor, all_motors_count);
   all_motors_count++;
   return all_motors[all_motors_count].id;
@@ -9,6 +9,8 @@ int motorInitint(int *ports, MotorSyncGroup *sync_group, Sensor *sensor) {
 
 // initialize a single motor object
 void Motor :: init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, int _id) {
+
+  truespeed = default_true_speed;
   
   // copy ports list
   for (int i = 0; i < 12; i++) {
