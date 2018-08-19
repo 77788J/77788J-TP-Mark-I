@@ -8,6 +8,11 @@ MotorSyncGroup :: MotorSyncGroup(bool _enabled, int *_motors, int _motor_count) 
   motor_count = motor_count;
 }
 
+// get mean position
+float MotorSyncGroup :: getMean() {
+  return mean_position;
+}
+
 // recalculate the mean motor position
 void MotorSyncGroup :: updateData() {
 

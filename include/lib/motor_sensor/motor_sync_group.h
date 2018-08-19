@@ -23,6 +23,9 @@ public:
   // initializer
   MotorSyncGroup(bool _enabled, int *_motors, int _motor_count);
 
+  // get mean position
+  float getMean();
+
   // recalculate the mean motor position
   void updateData();
 

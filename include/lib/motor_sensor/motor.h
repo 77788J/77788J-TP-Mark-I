@@ -13,19 +13,7 @@ extern "C" {
 
 // default truespeed array
 // custom ones may be used as well
-int default_true_speed[101] = {
-  0,
-  0,   0,   0,   0,   0,   0,   0,   0,  17,  17,
-  17,  17,  18,  19,  19,  20,  20,  20,  20,  21,
-  22,  22,  22,  23,  24,  24,  24,  24,  25,  25,
-  26,  26,  27,  27,  28,  28,  28,  28,  29,  29,
-  29,  30,  31,  31,  31,  31,  32,  32,  33,  34,
-  35,  35,  35,  36,  36,  37,  38,  38,  39,  39,
-  40,  41,  41,  42,  43,  44,  45,  45,  46,  47,
-  48,  50,  50,  51,  52,  53,  54,  55,  56,  57,
-  57,  58,  61,  61,  62,  62,  64,  65,  66,  66,
-  68,  69,  69,  69,  70,  85,  90, 100, 100, 100
-};
+extern int default_true_speed[101];
 
 // function to initialize motor and add to array
 // USE THIS TO INITIALIZE MOTORS
@@ -62,6 +50,12 @@ public:
   // truespeed array to use in this motor
   int *truespeed;
 
+  // scalar that approximates velocity from truespeed motor power
+  float vel_scalar;
+
+  // velocity control tuning parameter
+  float kvel;
+
   // mode of motor
   MotorMode mode;
 
@@ -69,6 +63,9 @@ public:
   // > all motors in a sync group attempt to stay in sync
   // > useful for things like drivestraight
   MotorSyncGroup *sync_group;
+
+  // motor syncing tuning parameter
+  float ksync;
 
   // slew rate for motor power (max power change per second, 0 for no slewing)
   float slew_rate;
@@ -112,10 +109,13 @@ private:
   // sensor associated with this motor
   Sensor *sensor;
 
+  //  time since target set
+  int time_elapsed;
+
   // raw power of motor
   int raw_power;
 
-  // percentage power of motor (before truespeed is applied)
+  // percentage power of motor (approx. linear via truespeed)
   int percent_power;
 
   // target power of motor
@@ -133,14 +133,22 @@ private:
   // target velocity of motor
   float target_velocity;
 
+  // current power offset for velocity control
+  float vel_offset;
+
+  // acceleration threshold for velocity control to take effect
+  float vel_accel_threshold;
+
+  // time threshold for velocity control to take effect
+  float vel_time_threshold;
+
   // acceleration of motor (RPM/interval)
   float acceleration;
-
 };
 
 // array of all motors in project
-int all_motors_count = 0;
-Motor all_motors[MAX_MOTOR_COUNT];
+extern int all_motors_count;
+extern Motor all_motors[MAX_MOTOR_COUNT];
 
 #ifdef __cplusplus
 }
