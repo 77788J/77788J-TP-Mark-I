@@ -7,6 +7,7 @@ extern "C" {
 
 #include <lib/motor_sensor/sensor.h>
 #include <lib/motor_sensor/motor_sync_group.h>
+#include <lib/pid.h>
 
 // max amount of motor objects
 #define MAX_MOTOR_COUNT 10
@@ -64,6 +65,10 @@ public:
   // > useful for things like drivestraight
   MotorSyncGroup *sync_group;
 
+  // PID controller
+  // > will set default parameters unless manually initialized via '[motor].pid.init(...)'
+  Pid pid;
+
   // motor syncing tuning parameter
   float ksync;
 
@@ -80,7 +85,7 @@ public:
   void updateStats();
 
   // update physical motor
-  void updatePhysical();
+  void updatePhysical(int time_delta);
 
   // get motor data
   float getRawPower();

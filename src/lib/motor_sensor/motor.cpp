@@ -48,6 +48,9 @@ void Motor :: init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, in
   sync_group = _sync_group;
   sensor = _sensor;
   id = _id;
+
+  // initialize PID to default settings
+  pid.init(0.f, 1.f, 0.f, 1.f);
 }
 
 // update motor statistics (velocity, position, etc)
@@ -59,7 +62,7 @@ void Motor :: updateStats() {
 }
 
 // update physical motor(s)
-void Motor :: updatePhysical() {
+void Motor :: updatePhysical(int time_delta) {
 
   // velocity control (if enabled)
   if (mode == mode_velocity) {
@@ -75,13 +78,10 @@ void Motor :: updatePhysical() {
   if (mode == mode_posvel) target_position += target_velocity;
 
   // position control (if enabled)
-  if (mode == mode_position || mode == mode_posvel) {
+  if (mode == mode_position || mode == mode_posvel) target_power = pid.update((*sensor).getValue(0), (*sensor).getVelocity(), time_delta);
 
-
-    // TODO position control
-
-
-  }
+  // make sure target power is within bounds of reality
+  percent_power = clamp(percent_power, -100, 100);
 
   // update percent power to target power and apply slewing if enabled
   if (slew_rate == 0) percent_power = target_power;
@@ -91,6 +91,8 @@ void Motor :: updatePhysical() {
   float mean = (*sync_group).getMean();
   target_power += (mean - position) * ksync;
   percent_power += (mean - position) * ksync;
+
+  // make sure target power is within bounds of reality (again)
   percent_power = clamp(percent_power, -100, 100);
 
   // apply truespeed
