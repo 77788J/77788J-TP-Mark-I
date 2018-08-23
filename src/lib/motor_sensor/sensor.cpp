@@ -127,7 +127,7 @@ void Sensor :: update() {
     case (ime): {
       int val; // cause IMEs are stupid and can't be stored in floats
       imeGet(port1, &val);
-      value = (float) val / extra_data;
+      value = (float) val * 360.f / (float) extra_data;
       if (reversed) value *= -1.f; // reverse if reversed;
     } break;
 
