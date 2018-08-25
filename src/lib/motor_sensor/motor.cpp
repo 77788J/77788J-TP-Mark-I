@@ -40,7 +40,7 @@ void Motor :: init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, in
   ksync = .1f;
   
   // copy ports list
-  for (int i = 0; i < 12; i++) {
+  for (int i = 0; i < MAX_MOTOR_COUNT; i++) {
     ports[i] = *(_ports + i);
   }
 

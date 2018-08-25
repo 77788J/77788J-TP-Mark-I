@@ -7,7 +7,7 @@ extern "C" {
 
 #include <lib/motor_sensor/sensor.h>
 #include <lib/motor_sensor/motor_sync_group.h>
-#include <lib/pid.h>
+#include <lib/control/pid.h>
 
 // max amount of motor objects
 #define MAX_MOTOR_COUNT 10
