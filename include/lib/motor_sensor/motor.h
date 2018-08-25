@@ -46,7 +46,7 @@ public:
   int id;
 
   // array of all ports associated with one Motor obj
-  int ports[12];
+  int ports[MAX_MOTOR_COUNT];
 
   // truespeed array to use in this motor
   int *truespeed;

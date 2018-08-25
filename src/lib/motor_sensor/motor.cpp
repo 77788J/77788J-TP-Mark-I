@@ -99,8 +99,8 @@ void Motor :: updatePhysical(int time_delta) {
   raw_power = *(truespeed + abs(raw_power)) * sign(raw_power);
 
   // loop through and set all physical motors
-  for (int i = 0; i < 12; i++) {
-    if (i && i > 0) motorSet(ports[i], raw_power);
+  for (int i = 0; i < MAX_MOTOR_COUNT; i++) {
+    if (ports[i] && ports[i] > 0) motorSet(ports[i], raw_power);
   }
 }
 
