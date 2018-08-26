@@ -41,7 +41,7 @@ float MotionProfile :: update(float _current_pos, float _current_vel, float _cur
     (*(profile + index + 1)).vel * kv + // velocity
     (*(profile + index + 1)).accel * ka; // acceleration
 
-  // calculate feedback (PD)
+  // calculate feedback (PD controller)
   float feedback = 
     ((*(profile + index)).pos - current.pos) * kp + // proportional
     ((*(profile + index)).vel - current.vel) * kd; // derivative
