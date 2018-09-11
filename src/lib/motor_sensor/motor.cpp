@@ -25,8 +25,15 @@ Motor all_motors[MAX_MOTOR_COUNT];
 int motorInit(int *ports, MotorSyncGroup *sync_group, Sensor *sensor) {
   all_motors[all_motors_count].init(ports, sync_group, sensor, all_motors_count);
   all_motors_count++;
-  return all_motors[all_motors_count].id;
+  return all_motors[all_motors_count - 1].id;
 }
+
+// C++ is doing some wierd stuff and not reserving memory like it should, so here's some zero-initializations
+// Motor :: Motor() {
+
+
+
+// }
 
 // initialize a single motor object
 void Motor :: init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, int _id) {
@@ -54,8 +61,8 @@ void Motor :: init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, in
 }
 
 // update motor statistics (velocity, position, etc)
-void Motor :: updateStats() {
-  (*sensor).update();
+void Motor :: updateStats(int time_delta) {
+  (*sensor).update(time_delta);
   position = (*sensor).getValue(0);
   velocity = (*sensor).getVelocity();
   acceleration = (*sensor).getAcceleration();
@@ -88,15 +95,18 @@ void Motor :: updatePhysical(int time_delta) {
   else percent_power += clamp(target_power - percent_power, -slew_rate, slew_rate);
 
   // sync motor (if enabled)
-  float mean = (*sync_group).getMean();
-  target_power += (mean - position) * ksync;
-  percent_power += (mean - position) * ksync;
+  if (sync_group) {
+    float mean = (*sync_group).getMean();
+    target_power += (mean - position) * ksync;
+    percent_power += (mean - position) * ksync;
+  }
 
   // make sure target power is within bounds of reality (again)
   percent_power = clamp(percent_power, -100, 100);
 
   // apply truespeed
-  raw_power = *(truespeed + abs(raw_power)) * sign(raw_power);
+  raw_power = *(truespeed + abs(percent_power)) * sign(percent_power);
+    // printf("%d\n", percent_power);
 
   // loop through and set all physical motors
   for (int i = 0; i < MAX_MOTOR_COUNT; i++) {
@@ -105,9 +115,9 @@ void Motor :: updatePhysical(int time_delta) {
 }
 
 // get motor data
-float Motor :: getRawPower() {return raw_power;}
-float Motor :: getPercentPower() {return percent_power;}
-float Motor :: getTargetPower() {return target_power;}
+float Motor :: getRawPower() {return (float) raw_power;}
+float Motor :: getPercentPower() {return (float) percent_power;}
+float Motor :: getTargetPower() {return (float) target_power;}
 float Motor :: getPosition() {return position;}
 float Motor :: getTargetPosition() {return target_position;}
 float Motor :: getVelocity() {return velocity;}
@@ -115,9 +125,9 @@ float Motor :: getTargetVelocity() {return target_velocity;}
 float Motor :: getAcceleration() {return acceleration;}
 
 // sets motor power
-  void Motor :: setPower(float pow, bool update_mode) {
+  void Motor :: setPower(float p, bool update_mode) {
     if (update_mode) mode = mode_power;
-    target_power = pow;
+    target_power = p;
   }
 
   // sets motor position

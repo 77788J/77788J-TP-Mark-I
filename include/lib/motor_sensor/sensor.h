@@ -19,10 +19,10 @@ extern "C" {
 #define SONAR_MAX 300.f
 
 // calculates the acceleration of a value given its history
-float calcAccel(int *history, int size);
+float calcAccel(float *history, float prev_vel, float prev_accel, int delta_time);
 
 // calculates the valocity of a value given its history
-float calcVel(int *history, int size, float accel);
+float calcVel(float *history, float prev_vel, int delta_time);
 
 // sensor types
 enum SensorType {digital, sonar, encoder, ime, potentiometer, gyro, light, custom};
@@ -70,7 +70,7 @@ public:
   SensorType getType();
 
   // updates the history database with the latest sensor value
-  void update();
+  void update(int update_delta);
 
 private:
 

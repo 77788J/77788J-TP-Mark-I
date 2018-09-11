@@ -1,37 +1,20 @@
 #include "lib/motor_sensor/sensor.h"
 
 // calculates the acceleration of a value given its history
-float calcAccel(float *history, int size) {
-
-  // init variables
-  float accel = 0;
-  float sum = 0;
-
-  // calculate acceleration with moving average
-  for (int i = 0; i < size - 2; i++) {
-    accel += ((*(history + i) - *(history + i + 1)) - (*(history + i + 1) - *(history + i + 2))) / ((float)i + 1.f);
-    sum += 1/((float)i + 1.f);
-  }
-
-  // return normalized acceleration
-  return accel / sum;
+float calcAccel(float *history, float prev_vel, float prev_accel, int delta_time) {
+  float current = calcVel(history, prev_vel, delta_time) - prev_vel;
+  current /= delta_time;
+  current *= 1000.f;
+  current *= 60.f;
+  return current * .5f + prev_accel * .5f;
 }
 
 // calculates the velocity of a value given its history
-float calcVel(float *history, int size, float accel) {
-
-  // init variables
-  float vel = 0;
-  float sum = 0;
-
-  // calculate velocity with moving average (accounting for acceleration)
-  for (int i = 0; i < size - 1; i++) {
-    vel += (*(history + i) - *(history + i + 1) + (accel * i)) / ((float)i + 1.f);
-    sum += 1/((float)i + 1.f);
-  }
-
-  // return normalized valocity
-  return vel / sum;
+float calcVel(float *history, float prev_vel, int delta_time) {
+  float current_diff =(*history - *(history + 1)) / 360.f;
+  current_diff /= delta_time;
+  current_diff *= 1000.f;
+  return current_diff * .5f + prev_vel * .5f;
 }
 
 // initialize sensor
@@ -97,7 +80,7 @@ void Sensor :: pushValue(float x) {
 }
 
 // updates the history database with the latest sensor value
-void Sensor :: update() {
+void Sensor :: update(int delta_time) {
 
   // inits value variable
   float value = 0;
@@ -162,6 +145,6 @@ void Sensor :: update() {
   else initHistory(value);
 
   // update sensor statistics
-  acceleration = calcAccel(history, SENSOR_HISTORY);
-  velocity = calcVel(history, SENSOR_HISTORY, acceleration);
+  acceleration = calcAccel(history, velocity, acceleration, delta_time);
+  velocity = calcVel(history, velocity, delta_time);
 }

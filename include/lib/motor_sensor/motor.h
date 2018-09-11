@@ -75,14 +75,15 @@ public:
   // slew rate for motor power (max power change per second, 0 for no slewing)
   float slew_rate;
 
-  // initializer
-  // DO NOT CALL THIS
+  // initializers
+  // DO NOT CALL THESE
   // CALL motorInit(...)
-  // USING THIS WILL BREAK STUFF
+  // USING THESE WILL BREAK STUFF
+  // Motor();
   void init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, int _id);
 
   // update motor statistics (velocity, position, etc)
-  void updateStats();
+  void updateStats(int time_delta);
 
   // update physical motor
   void updatePhysical(int time_delta);
@@ -98,7 +99,7 @@ public:
   float getAcceleration();
 
   // sets motor power
-  void setPower(float pow, bool update_mode);
+  void setPower(float p, bool update_mode);
 
   // sets motor position
   void setPosition(float pos, bool update_mode);
