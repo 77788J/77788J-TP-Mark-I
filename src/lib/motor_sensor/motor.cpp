@@ -142,7 +142,7 @@ float Motor :: getAcceleration() {return acceleration;}
   // sets motor velocity
   void Motor :: setVelocity(float vel, bool update_mode) {
     if (update_mode) mode = mode_velocity;
-    if (fabs(target_velocity - vel) >= 10.f) {
+    if (fabs(target_velocity - vel) >= 3.5f) {
       vel_offset = 0.f;
       time_elapsed = 0;
     }
