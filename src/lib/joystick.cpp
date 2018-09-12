@@ -1,7 +1,13 @@
 #include "lib/joystick.h"
+#include "math.h"
 
 // default initializer
-Joystick :: Joystick() {}
+Joystick :: Joystick() {
+  deadbandLH = 5;
+  deadbandLV = 5;
+  deadbandRH = 5;
+  deadbandRV = 5;
+}
 
 // "factory" that inits a Joystick
 void Joystick :: init(int joystick_) {
@@ -56,9 +62,13 @@ void Joystick :: update() {
 
   // update analog sticks (range of -100:100)
   analogRH = (float) joystickGetAnalog(j, 1) * 0.787401575f;
+  if (fabs(analogRH) <= deadbandRH) analogRH = 0.f;
   analogRV = (float) joystickGetAnalog(j, 2) * 0.787401575f;
+  if (fabs(analogRV) <= deadbandRV) analogRV = 0.f;
   analogLV = (float) joystickGetAnalog(j, 3) * 0.787401575f;
+  if (fabs(analogLV) <= deadbandLV) analogLV = 0.f;
   analogLH = (float) joystickGetAnalog(j, 4) * 0.787401575f;
+  if (fabs(analogLH) <= deadbandLH) analogLH = 0.f;
 
   // update time when last updated
   updated = millis();

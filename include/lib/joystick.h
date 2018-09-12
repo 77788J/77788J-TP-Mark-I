@@ -48,6 +48,12 @@ public:
   int analogLV;
   int analogLH;
 
+  // analog deadbands
+  int deadbandRH;
+  int deadbandRV;
+  int deadbandLH;
+  int deadbandLV;
+
   // default initializer
   // MAKE SURE TO FULLY INITIALIZE WITH <Joystick>.init()
   Joystick();
