@@ -4,8 +4,6 @@
 float calcAccel(float *history, float prev_vel, float prev_accel, int delta_time) {
   float current = calcVel(history, prev_vel, delta_time) - prev_vel;
   current /= delta_time;
-  current *= 1000.f;
-  current *= 60.f;
   return current * .5f + prev_accel * .5f;
 }
 
@@ -14,7 +12,8 @@ float calcVel(float *history, float prev_vel, int delta_time) {
   float current_diff =(*history - *(history + 1)) / 360.f;
   current_diff /= delta_time;
   current_diff *= 1000.f;
-  return current_diff * .5f + prev_vel * .5f;
+  current_diff *= 60.f;
+  return current_diff * .25f + prev_vel * .75f;
 }
 
 // initialize sensor

@@ -39,8 +39,9 @@ int motorInit(int *ports, MotorSyncGroup *sync_group, Sensor *sensor) {
 void Motor :: init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, int _id) {
 
   // set defaults
+  vel_offset = 0.f;
   truespeed = default_true_speed;
-  vel_scalar = 1.f;
+  vel_scalar = .8f;
   vel_accel_threshold = 5.f;
   vel_time_threshold = 500;
   kvel = .1f;
@@ -75,7 +76,7 @@ void Motor :: updatePhysical(int time_delta) {
   if (mode == mode_velocity) {
 
     // if motor has stabilized, tweak offset to achieve target RPM
-    if (fabs(acceleration) < vel_accel_threshold && time_elapsed >= vel_time_threshold) vel_offset += (target_velocity - velocity) * kvel;
+    if (fabs(acceleration) < vel_accel_threshold && time_elapsed >= vel_time_threshold * .01f * fabs(target_velocity - velocity)) vel_offset += (target_velocity - velocity) * kvel;
 
     // calcute target power that should result in target velocity
     target_power = (target_velocity * vel_scalar) + vel_offset;
@@ -112,6 +113,8 @@ void Motor :: updatePhysical(int time_delta) {
   for (int i = 0; i < MAX_MOTOR_COUNT; i++) {
     if (ports[i] && ports[i] > 0) motorSet(ports[i], raw_power);
   }
+
+  time_elapsed += time_delta;
 }
 
 // get motor data
@@ -139,6 +142,10 @@ float Motor :: getAcceleration() {return acceleration;}
   // sets motor velocity
   void Motor :: setVelocity(float vel, bool update_mode) {
     if (update_mode) mode = mode_velocity;
+    if (fabs(target_velocity - vel) >= 10.f) {
+      vel_offset = 0.f;
+      time_elapsed = 0;
+    }
     target_velocity = vel;
   }
 
