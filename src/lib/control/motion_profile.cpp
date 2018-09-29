@@ -1,4 +1,4 @@
-#include "lib/control/motion_profile.h"
+#include "lib/control/motion_profile.hpp"
 #include "math.h"
 
 // initializer

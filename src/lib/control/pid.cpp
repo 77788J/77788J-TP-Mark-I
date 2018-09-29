@@ -1,4 +1,4 @@
-#include "lib/control/pid.h"
+#include "lib/control/pid.hpp"
 #include "math.h"
 
 // initializer/resetter

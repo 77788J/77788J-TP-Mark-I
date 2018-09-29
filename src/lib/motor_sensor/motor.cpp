@@ -1,6 +1,6 @@
-#include "lib/motor_sensor/motor.h"
+#include "lib/motor_sensor/motor.hpp"
 #include "math.h"
-#include "lib/utility.h"
+#include "lib/utility.hpp"
 
 // default truespeed array
 int default_true_speed[101] = {
@@ -83,7 +83,11 @@ void Motor :: updatePhysical(int time_delta) {
   }
 
   // move posvel target (if enabled)
-  if (mode == mode_posvel) target_position += target_velocity;
+  if (mode == mode_posvel) {
+    target_position += target_velocity * .006f * time_delta;
+    pid.integral_reset = false;
+    pid.setTarget(target_position);
+  }
 
   // position control (if enabled)
   if (mode == mode_position || mode == mode_posvel) target_power = pid.update((*sensor).getValue(0), (*sensor).getVelocity(), time_delta);
@@ -137,6 +141,7 @@ float Motor :: getAcceleration() {return acceleration;}
   void Motor :: setPosition(float pos, bool update_mode) {
     if (update_mode) mode = mode_position;
     target_position = pos;
+    pid.setTarget(target_position);
   }
 
   // sets motor velocity
@@ -152,5 +157,6 @@ float Motor :: getAcceleration() {return acceleration;}
   // sets motor velocity via position
   void Motor :: setPosVel(float vel, bool update_mode) {
     if (update_mode) mode = mode_posvel;
+    target_position = (*sensor).getValue(0);
     target_velocity = vel;
   }

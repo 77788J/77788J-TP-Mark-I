@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <main.h>
+#include <main.hpp>
 
 // starts all background tasks
 void startAllTasks();

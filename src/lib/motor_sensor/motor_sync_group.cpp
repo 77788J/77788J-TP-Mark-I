@@ -1,5 +1,5 @@
-#include "lib/motor_sensor/motor_sync_group.h"
-#include "lib/motor_sensor/motor.h"
+#include "lib/motor_sensor/motor_sync_group.hpp"
+#include "lib/motor_sensor/motor.hpp"
 
 // initializer
 MotorSyncGroup :: MotorSyncGroup(bool _enabled, int *_motors, int _motor_count) {

@@ -1,4 +1,4 @@
-#include "lib/lcd.h"
+#include "lib/lcd.hpp"
 
 // default initializer
 Lcd :: Lcd() {}

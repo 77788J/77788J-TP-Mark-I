@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <main.h>
+#include <main.hpp>
 
 int sign(float x);
 float min(float a, float b);

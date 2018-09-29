@@ -1,9 +1,15 @@
-#include "task_manager.h"
+#include "task_manager.hpp"
+#include "lib/motor_sensor/motor.hpp"
+#include "lib/motor_sensor/sensor.hpp"
+
+#define SENSOR_INTERVAL 5
+#define PHYSICAL_MOTOR_INTERVAL 15
+#define CONTROL_INTERVAL 15
 
 // sensor task
 void sensorTask() {
     for (int i = 0; i < all_motors_count; i++) {
-        all_motors[i].updateData();
+        all_motors[i].updateStats(SENSOR_INTERVAL);
     }
 
     // custom sensors
@@ -16,7 +22,7 @@ void sensorTask() {
 // motor task
 void motorTask() {
     for (int i = 0; i < all_motors_count; i++) {
-        all_motors[i].updatePhysical();
+        all_motors[i].updatePhysical(PHYSICAL_MOTOR_INTERVAL);
     }
 }
 
@@ -27,7 +33,7 @@ void controlTask() {
 
 // starts all background tasks
 void startAllTasks() {
-    sensor_task = taskRunLoop(sensorTask, 5);
-    motor_task = taskRunLoop(motorTask, 15);
-    control_task = taskRunLoop(controlTask, 15);
+    sensor_task = taskRunLoop(sensorTask, SENSOR_INTERVAL);
+    motor_task = taskRunLoop(motorTask, PHYSICAL_MOTOR_INTERVAL);
+    control_task = taskRunLoop(controlTask, CONTROL_INTERVAL);
 }

@@ -1,4 +1,4 @@
-#include "lib/motor_sensor/sensor.h"
+#include "lib/motor_sensor/sensor.hpp"
 
 // calculates the acceleration of a value given its history
 float calcAccel(float *history, float prev_vel, float prev_accel, int delta_time) {
@@ -17,7 +17,7 @@ float calcVel(float *history, float prev_vel, int delta_time) {
 }
 
 // initialize sensor
-Sensor :: Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)()) {
+void Sensor :: init(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)()) {
 
   // set variables
   type = _type;

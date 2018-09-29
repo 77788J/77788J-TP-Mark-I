@@ -5,7 +5,7 @@ ROOT=.
 # Binary output directory
 BINDIR=$(ROOT)/bin
 # Subdirectories to include in the build
-SUBDIRS=src src/lib src/lib/motor_sensor src/competition_control src/lib/control
+SUBDIRS=src  src/competition_control src/subsystems src/lib src/lib/motor_sensor src/lib/control
 
 # Nothing below here needs to be modified by typical users
 

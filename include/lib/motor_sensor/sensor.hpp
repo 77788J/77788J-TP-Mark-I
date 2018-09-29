@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <main.h>
+#include <main.hpp>
 
 #define SENSOR_HISTORY 10
 
@@ -55,7 +55,7 @@ public:
   // initialize sensor
   // > leave _customInit and _customUpdate null if not using custom sensor
   // > leave _extra_data null if no extra data is required
-  Sensor(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)());
+  void init(SensorType _type, int _port1, int _port2, bool _reversed, float _extra_data, void (*_customInit)(), float (*_customUpdate)());
 
   // returns the sensor value x intervals ago (0 is current)
   float getValue(int x);

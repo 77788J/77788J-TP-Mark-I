@@ -1,4 +1,4 @@
-#include "lib/utility.h"
+#include "lib/utility.hpp"
 #include "math.h"
 
 // returns the sign (+, -, or 0) of a value

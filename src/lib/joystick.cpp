@@ -1,4 +1,4 @@
-#include "lib/joystick.h"
+#include "lib/joystick.hpp"
 #include "math.h"
 
 // default initializer
