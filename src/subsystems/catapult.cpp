@@ -1,4 +1,5 @@
 #include "subsystems/catapult.hpp"
+#include "lib/motor_sensor/motor.hpp"
 #include "controller.hpp"
 
 namespace catapult {

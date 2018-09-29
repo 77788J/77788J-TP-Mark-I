@@ -1,5 +1,6 @@
 #include "controller.hpp"
 #include "main.hpp"
+#include "subsystems/subsystems.hpp"
 #include "lib/joystick.hpp"
 #include "lib/motor_sensor/motor.hpp"
 #include "lib/motor_sensor/sensor.hpp"
@@ -37,9 +38,18 @@ void motorTask() {
     }
 }
 
-// driver control task
+// subystem control task
 void controlTask() {
-    // stuffs
+
+    // driver control
+    if (isEnabled() && !isAutonomous()) {
+        ball_intake::updateDriverControl();
+        catapult::updateDriverControl();
+    }
+
+    // general control
+    ball_intake::update();
+    catapult::update();
 }
 
 // starts all background tasks
