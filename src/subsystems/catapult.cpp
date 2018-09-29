@@ -14,7 +14,7 @@ namespace catapult {
     void init() {
 
         // init motors
-        int ports[10] = {4};
+        int ports[10] = {7};
         motors = motorInit(ports, NULL, NULL);
 
         // init limit switch
