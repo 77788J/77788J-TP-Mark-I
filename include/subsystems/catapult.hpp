@@ -1,10 +1,6 @@
 #ifndef CATAPULT_H_
 #define CATAPULT_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <lib/motor_sensor/motor.hpp>
 #include <lib/motor_sensor/sensor.hpp>
 
@@ -14,6 +10,9 @@ namespace catapult {
     extern int motors;
     extern Sensor limit_switch;
 
+    // control data
+    extern bool is_shooting;
+
     // initialozer
     void init();
 
@@ -22,9 +21,5 @@ namespace catapult {
     void update();
 
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

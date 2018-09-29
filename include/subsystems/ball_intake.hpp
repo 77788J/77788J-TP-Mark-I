@@ -1,9 +1,9 @@
 #ifndef BALL_INTAKE_H_
 #define BALL_INTAKE_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+// #ifdef __cplusplus
+// extern "C" {
+// #endif
 
 namespace ball_intake {
 
@@ -13,8 +13,8 @@ namespace ball_intake {
 
 }
 
-#ifdef __cplusplus
-}
-#endif
+// #ifdef __cplusplus
+// }
+// #endif
 
 #endif
