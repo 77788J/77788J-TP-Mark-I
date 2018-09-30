@@ -21,10 +21,15 @@ namespace ball_intake {
         intake_dir = 0;
     }
 
+    // change the direction in which the intake spins
+    void setDirection(int dir) {
+        intake_dir = dir;
+    }
+
     // update controller for driver control
     void updateDriverControl() {
-        if (joystick.btn6U_new == 1) intake_dir = 1 - abs(intake_dir); // toggle positive
-        if (joystick.btn8L_new == 1) intake_dir = -1 + abs(intake_dir); // toggle negative
+        if (joystick.btn6U_new == 1) setDirection( 1 - abs(intake_dir)); // toggle positive
+        if (joystick.btn8L_new == 1) setDirection(-1 + abs(intake_dir)); // toggle negative
     }
 
     // update general ball intake controller

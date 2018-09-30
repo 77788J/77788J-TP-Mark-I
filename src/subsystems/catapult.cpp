@@ -27,11 +27,26 @@ namespace catapult {
 
     int time_since_shot = 0;
 
+    // fire catapult
+    void fire() {
+        time_since_shot = 0;
+        is_shooting = true;
+    }
+    
+    // wait until back in load position
+    void waitForLoadPos(int timeout) {
+        int t = 0;
+        while (!limit_switch.getValue(0) && t < timeout) {
+            delay(1);
+            ++t;
+        }
+    }
+
     // update controller for driver control
     void updateDriverControl() {
 
         // shoot catapult if button pressed
-        if (joystick.btn8D_new == 1) is_shooting = true;
+        if (joystick.btn8D_new == 1) fire();
     }
 
     // update general catapult controller
@@ -39,7 +54,6 @@ namespace catapult {
 
         // full power if shooting
         if (is_shooting) {
-            time_since_shot = 0;
             all_motors[motors].setPower(100, true);
             if (!limit_switch.getValue(0)) is_shooting = false;
         }

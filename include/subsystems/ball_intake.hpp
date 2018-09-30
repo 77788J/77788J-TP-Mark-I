@@ -14,6 +14,9 @@ namespace ball_intake {
     // initializer
     void init();
 
+    // control functions
+    void setDirection(int dir);
+
     // controllers
     void updateDriverControl();
     void update();

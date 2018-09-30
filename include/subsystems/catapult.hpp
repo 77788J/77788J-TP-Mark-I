@@ -16,6 +16,10 @@ namespace catapult {
     // initialozer
     void init();
 
+    // control functions
+    void fire();
+    void waitForLoadPos(int timeout);
+
     // controllers
     void updateDriverControl();
     void update(int delta_time);
