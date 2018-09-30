@@ -25,7 +25,7 @@ float calcAccel(float *history, float prev_vel, float prev_accel, int delta_time
 float calcVel(float *history, float prev_vel, int delta_time);
 
 // sensor types
-enum SensorType {digital, sonar, encoder, ime, potentiometer, gyro, light, custom};
+enum SensorType {sensor_digital, sensor_sonar, sensor_encoder, sensor_ime, sensor_potentiometer, sensor_gyro, sensor_light, sensor_custom};
 
 // primary sensor class
 // this class is basically a wrapper for all Vex sensors (excluding the accelerometer)

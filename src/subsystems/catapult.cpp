@@ -19,7 +19,7 @@ namespace catapult {
         motors = motorInit(ports, NULL, NULL);
 
         // init limit switch
-        limit_switch.init(digital, 1, 0, false, 0, NULL, NULL);
+        limit_switch.init(sensor_digital, 1, 0, false, 0, NULL, NULL);
 
         // init control varaibles
         is_shooting = false;

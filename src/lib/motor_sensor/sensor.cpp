@@ -30,20 +30,20 @@ void Sensor :: init(SensorType _type, int _port1, int _port2, bool _reversed, fl
   // init specific sensors
   switch (type) {
 
-    // digital sensor
-    case (digital): pinMode(port1, INPUT); break;
+    // sensor_digital sensor
+    case (sensor_digital): pinMode(port1, INPUT); break;
     
-    // sonar sensor
-    case (sonar): sonar_sensor = ultrasonicInit(port1, port2); break;
+    // sensor_sonar sensor
+    case (sensor_sonar): sonar_sensor = ultrasonicInit(port1, port2); break;
 
-    // quadrature encoder
-    case (encoder): encoder_sensor = encoderInit(port1, port2, false); break;
+    // quadrature sensor_encoder
+    case (sensor_encoder): encoder_sensor = encoderInit(port1, port2, false); break;
 
-    // gyro
-    case (gyro): gyro_sensor = gyroInit(port1, extra_data);
+    // sensor_gyro
+    case (sensor_gyro): gyro_sensor = gyroInit(port1, extra_data);
 
-    // custom sensor
-    case (custom): _customInit();
+    // sensor_custom sensor
+    case (sensor_custom): _customInit();
 
     // added cause compiler warnings are annoying
     default: break;
@@ -90,52 +90,52 @@ void Sensor :: update(int delta_time) {
   // different code for different sensors
   switch (type) {
 
-    // standard digital input
-    case (digital): {
+    // standard sensor_digital input
+    case (sensor_digital): {
       value = digitalRead(port1) == LOW;
       if (reversed) value = 1.f - value; // invert if reversed
     } break;
 
-    // sonar sensor (cm)
-    case (sonar): {
+    // sensor_sonar sensor (cm)
+    case (sensor_sonar): {
       value = ultrasonicGet(sonar_sensor);
       if (reversed) value = SONAR_MAX - value + SONAR_MIN; // invert if reversed
     } break;
 
-    // quadrature encoder (deg)
-    case (encoder): {
+    // quadrature sensor_encoder (deg)
+    case (sensor_encoder): {
       value = (float) encoderGet(encoder_sensor) * extra_data;
       if (reversed) value *= -1.f; // reverse if reversed
     } break;
 
-    // IME (deg)
-    case (ime): {
+    // sensor_ime (deg)
+    case (sensor_ime): {
       int val; // cause IMEs are stupid and can't be stored in floats
       imeGet(port1, &val);
       value = (float) val * 360.f / (float) extra_data;
       if (reversed) value *= -1.f; // reverse if reversed;
     } break;
 
-    // potentiometer (deg)
-    case (potentiometer): {
+    // sensor_potentiometer (deg)
+    case (sensor_potentiometer): {
       value = (float) analogRead(port1) * (260.f/4095.f) * extra_data;
       if (reversed) value = 260.f - value; // invert if reversed
     } break;
 
-    // gyro (deg)
-    case (gyro): {
+    // sensor_gyro (deg)
+    case (sensor_gyro): {
       value = gyroGet(gyro_sensor);
       if (reversed) value *= -1.f; // reverse if reversed;
     } break;
 
-    // light sensor/line follower
-    case (light): {
+    // sensor_light sensor/line follower
+    case (sensor_light): {
       value = analogRead(port1);
       if (reversed) value = 4095.f - value; // invert if reversed
     } break;
 
-    // custom sensor
-    case (custom): {
+    // sensor_custom sensor
+    case (sensor_custom): {
       value = customUpdate();
     } break;
 
