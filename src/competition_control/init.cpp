@@ -2,11 +2,7 @@
 #include "controller.hpp"
 #include "subsystems/subsystems.hpp"
 
-void initializeIO() {
-
-
-
-}
+void initializeIO() {}
 
 void initialize() {
 

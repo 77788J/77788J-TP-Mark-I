@@ -25,7 +25,7 @@ void sensorTask() {
     }
 
     // custom sensors
-
+    catapult::limit_switch.update(TASK_SENSOR_INTERVAL);
 
     // custom PIDs
 
@@ -43,13 +43,17 @@ void controlTask() {
 
     // driver control
     if (isEnabled() && !isAutonomous()) {
+        // joystick update
+        joystick.update();
+
+        // subsystems
         ball_intake::updateDriverControl();
         catapult::updateDriverControl();
     }
 
     // general control
     ball_intake::update();
-    catapult::update();
+    catapult::update(TASK_CONTROL_INTERVAL);
 }
 
 // starts all background tasks

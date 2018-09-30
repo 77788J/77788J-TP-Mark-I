@@ -25,6 +25,8 @@ namespace catapult {
         is_shooting = false;
     }
 
+    int time_since_shot = 0;
+
     // update controller for driver control
     void updateDriverControl() {
 
@@ -33,15 +35,19 @@ namespace catapult {
     }
 
     // update general catapult controller
-    void update() {
+    void update(int delta_time) {
 
         // full power if shooting
         if (is_shooting) {
+            time_since_shot = 0;
             all_motors[motors].setPower(100, true);
             if (!limit_switch.getValue(0)) is_shooting = false;
         }
 
         // if not shooting, only give full power when not at load angle
-        else all_motors[motors].setPower(15 + 100 * (!limit_switch.getValue(0)), true);
+        else all_motors[motors].setPower((float) (10 + (!limit_switch.getValue(0)) * (65 + (float)(750 - time_since_shot) * 0.04666666666f)), true);
+
+        time_since_shot += delta_time;
+        if (time_since_shot > 750) time_since_shot = 750;
     }
 }

@@ -29,6 +29,9 @@ void Sensor :: init(SensorType _type, int _port1, int _port2, bool _reversed, fl
 
   // init specific sensors
   switch (type) {
+
+    // digital sensor
+    case (digital): pinMode(port1, INPUT); break;
     
     // sonar sensor
     case (sonar): sonar_sensor = ultrasonicInit(port1, port2); break;
@@ -89,7 +92,7 @@ void Sensor :: update(int delta_time) {
 
     // standard digital input
     case (digital): {
-      value = digitalRead(port1);
+      value = digitalRead(port1) == LOW;
       if (reversed) value = 1.f - value; // invert if reversed
     } break;
 

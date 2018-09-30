@@ -63,10 +63,12 @@ void Motor :: init(int *_ports, MotorSyncGroup *_sync_group, Sensor *_sensor, in
 
 // update motor statistics (velocity, position, etc)
 void Motor :: updateStats(int time_delta) {
-  (*sensor).update(time_delta);
-  position = (*sensor).getValue(0);
-  velocity = (*sensor).getVelocity();
-  acceleration = (*sensor).getAcceleration();
+  if (sensor != NULL) {
+    (*sensor).update(time_delta);
+    position = (*sensor).getValue(0);
+    velocity = (*sensor).getVelocity();
+    acceleration = (*sensor).getAcceleration();
+  }
 }
 
 // update physical motor(s)

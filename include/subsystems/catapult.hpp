@@ -18,7 +18,7 @@ namespace catapult {
 
     // controllers
     void updateDriverControl();
-    void update();
+    void update(int delta_time);
 
 }
 
