@@ -7,12 +7,14 @@
 
 namespace transmission {
 
-    // generic motors/sensors
-    extern int motors;
-    extern Sensor pot;
+    // generic motors
+    extern int motor_top_left;
+    extern int motor_btm_left;
+    extern int motor_top_right;
+    extern int motor_btm_right;
 
     // generic control functions
-    void setPriorityRatio;
+    void setPriorityRatio(float chassis_part, float lift_part);
 
     // chassis-specific stuff
     namespace chassis {
@@ -20,13 +22,18 @@ namespace transmission {
         // constants
         #define WHEEL_SIZE 4.125f
 
+        // motors
+        extern int motor_left;
+        extern int motor_right;
+        
         // sensors
         extern Sensor gyro;
         extern Sensor left_enc;
         extern Sensor right_enc;
 
         // control algorithms
-        extern Pid position_pid;
+        extern Pid position_pid_left;
+        extern Pid position_pid_right;
         extern Pid rotation_pid;
 
         // variables
@@ -41,12 +48,25 @@ namespace transmission {
         extern float rotation_vel;
 
         // control functions
+        void setPowerLeft(float p);
+        void setPowerRight(float p);
+        void setPower(float p);
         void setPower(float l, float r);
-        void moveInches(float dist);
-        void moveDegrees(float dist);
-        void gotoInches(float dist);
+        void gotoDegrees(float left, float right);
         void gotoDegrees(float dist);
-        void rotate(float deg);
+        void gotoInches(float left, float right);
+        void gotoInches(float dist);
+        void moveDegrees(float dist);
+        void moveInches(float dist);
+        void rotateTo(float deg);
+        void rotateBy(float deg);
+
+        // initializer
+        void init();
+
+        // controllers
+        void updateDriverControl();
+        void update(int delta_time);
     }
 
     // lift-specific stuff
@@ -76,6 +96,13 @@ namespace transmission {
         void moveDegrees(float dist);
         void gotoInches(float dist);
         void gotoDegrees(float dist);
+
+        // initializer
+        void init();
+
+        // controllers
+        void updateDriverControl();
+        void update(int delta_time);
     }
 
     // initializer
