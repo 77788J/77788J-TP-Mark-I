@@ -12,8 +12,6 @@ namespace transmission::chassis {
 
     // sensors
     Sensor gyro;
-    Sensor left_enc;
-    Sensor right_enc;
 
     // control algorithms
     Pid position_pid_left;
@@ -102,14 +100,16 @@ namespace transmission::chassis {
 
         // init motors
         int left_ports[10] = {6};
-        motor_left = motorInit(left_ports, NULL, &left_enc);
         int right_ports[10] = {5};
+        Sensor left_enc;
+        Sensor right_enc;
+        left_enc.init(sensor_encoder, 2, 3, false, 7.f / 3.f, NULL, NULL);
+        left_enc.init(sensor_encoder, 4, 5, false, 7.f / 3.f, NULL, NULL);
+        motor_left = motorInit(left_ports, NULL, &left_enc);
         motor_right = motorInit(right_ports, NULL, &right_enc);
 
         // init sensors
         gyro.init(sensor_gyro, 1, 0, false, 196, NULL, NULL);
-        left_enc.init(sensor_encoder, 2, 3, false, 7.f / 3.f, NULL, NULL);
-        left_enc.init(sensor_encoder, 4, 5, false, 7.f / 3.f, NULL, NULL);
 
         // init control algorithms
         position_pid_left.init(0.f, 1.f, 0.f, 0.f);

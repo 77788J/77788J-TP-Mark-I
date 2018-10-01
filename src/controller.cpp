@@ -18,6 +18,10 @@ TaskHandle control_task; // overall driver control
 // global joystick reference
 Joystick joystick;
 
+// simplify transmission namespace
+namespace chassis = transmission::chassis;
+namespace lift = transmission::lift;
+
 // sensor task
 void sensorTask() {
     for (int i = 0; i < all_motors_count; i++) {
@@ -26,8 +30,13 @@ void sensorTask() {
 
     // custom sensors
     catapult::limit_switch.update(TASK_SENSOR_INTERVAL);
+    lift::pot.update(TASK_SENSOR_INTERVAL);
 
     // custom PIDs
+    chassis::position_pid_left.update(chassis::left_pos_deg, chassis::left_vel, TASK_SENSOR_INTERVAL);
+    chassis::position_pid_right.update(chassis::right_pos_deg, chassis::right_vel, TASK_SENSOR_INTERVAL);
+    chassis::rotation_pid.update(chassis::orientation, chassis::rotation_vel, TASK_SENSOR_INTERVAL);
+    lift::pid.update(lift::angle, lift::vel, TASK_SENSOR_INTERVAL);
 
 }
 
@@ -49,11 +58,17 @@ void controlTask() {
         // subsystems
         ball_intake::updateDriverControl();
         catapult::updateDriverControl();
+        chassis::updateDriverControl();
+        lift::updateDriverControl();
+        transmission::updateDriverControl();
     }
 
     // general control
     ball_intake::update();
     catapult::update(TASK_CONTROL_INTERVAL);
+    chassis::update(TASK_CONTROL_INTERVAL);
+    lift::update(TASK_CONTROL_INTERVAL);
+    transmission::update(TASK_CONTROL_INTERVAL);
 }
 
 // starts all background tasks

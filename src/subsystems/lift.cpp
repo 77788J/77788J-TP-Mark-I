@@ -16,6 +16,7 @@ namespace transmission::lift {
     float priority = .5f;
     float angle = MIN_ANGLE;
     float height = 0;
+    float vel = 0;
 
     // private variables
     float desired_power = 0;

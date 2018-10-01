@@ -28,8 +28,6 @@ namespace transmission {
         
         // sensors
         extern Sensor gyro;
-        extern Sensor left_enc;
-        extern Sensor right_enc;
 
         // control algorithms
         extern Pid position_pid_left;
@@ -89,6 +87,7 @@ namespace transmission {
         extern float priority;
         extern float angle;
         extern float height;
+        extern float vel;
 
         // control functions
         void setPower(float p);
