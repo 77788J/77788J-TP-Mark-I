@@ -1,8 +1,6 @@
 #include "subsystems/transmission.hpp"
 #include "main.hpp"
 #include "lib/utility.hpp"
-
-#define _USE_MATH_DEFINES
 #include "math.h"
 
 namespace transmission {
