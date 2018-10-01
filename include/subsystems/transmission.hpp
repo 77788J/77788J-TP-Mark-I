@@ -36,6 +36,8 @@ namespace transmission {
 
         // variables
         extern float priority;
+        extern float desired_power_left;
+        extern float desired_power_right;
         extern float left_pos_deg;
         extern float right_pos_deg;
         extern float left_pos_inches;
@@ -84,6 +86,7 @@ namespace transmission {
         extern Pid pid;
 
         // variables
+        extern float desired_power;
         extern float priority;
         extern float angle;
         extern float height;

@@ -20,6 +20,8 @@ namespace transmission::chassis {
 
     // variables
     float priority = .5f;
+    float desired_power_left = 0;
+    float desired_power_right = 0;
     float left_pos_deg = 0;
     float right_pos_deg = 0;
     float left_pos_inches = 0;
@@ -28,10 +30,6 @@ namespace transmission::chassis {
     float right_vel = 0;
     float orientation = 0;
     float rotation_vel = 0;
-
-    // private variables
-    float desired_power_left = 0;
-    float desired_power_right = 0;
 
     // set power of left side
     void setPowerLeft(float p) {

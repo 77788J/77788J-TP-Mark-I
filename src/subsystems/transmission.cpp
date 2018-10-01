@@ -1,5 +1,6 @@
 #include "subsystems/transmission.hpp"
 #include "main.hpp"
+#include "lib/utility.hpp"
 
 #define _USE_MATH_DEFINES
 #include "math.h"
@@ -49,8 +50,33 @@ namespace transmission {
     // update general transmission controller
     void update(int delta_time) {
 
-        
+        // calculate positive ideal motor power for each subsystem
+        float chassis_ideal = max(fabs(chassis::desired_power_left), fabs(chassis::desired_power_right));
+        float lift_ideal = fabs(lift::desired_power);
 
+        // calculate max power currently supposed to be exerted
+        float total = chassis_ideal + lift_ideal;
+
+        // calculate max possible power for each subsystem
+        float chassis_real = min(chassis_ideal, max(chassis::priority * 100, chassis_ideal + 100 - total));
+        total = chassis_real + lift_ideal; // recalculate total
+        float lift_real = min(lift_ideal, max(lift::priority * 100, lift_ideal + 100 - total));
+
+        // calculate multipliers
+        float chassis_scale = chassis_real / chassis_ideal;
+        float lift_scale = lift_real / lift_ideal;
+
+        // calculate final subsystem powers
+        float chassis_power_left = chassis::desired_power_left * chassis_scale;
+        float chassis_power_right = chassis::desired_power_right * chassis_scale;
+        float lift_power = lift::desired_power * lift_scale;
+
+        // apply to motors
+        all_motors[motor_top_left].setPower(chassis_power_left - lift_power, true);
+        all_motors[motor_top_right].setPower(chassis_power_right - lift_power, true);
+        all_motors[motor_btm_left].setPower(-chassis_power_left - lift_power, true);
+        all_motors[motor_btm_right].setPower(-chassis_power_right - lift_power, true);
+        all_motors[chassis::motor_left].setPower(chassis_power_left, true);
+        all_motors[chassis::motor_right].setPower(chassis_power_right, true);
     }
-
 }

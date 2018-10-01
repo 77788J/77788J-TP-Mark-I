@@ -14,12 +14,10 @@ namespace transmission::lift {
 
     // variables
     float priority = .5f;
+    float desired_power = 0;
     float angle = MIN_ANGLE;
     float height = 0;
     float vel = 0;
-
-    // private variables
-    float desired_power = 0;
 
     // calculate height of lift given specific angle
     float calcHeight(float angle) {
