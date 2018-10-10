@@ -42,6 +42,20 @@ public:
   int btn8L_new;
   int btn8R_new;
 
+  // stores how long buttons have been held down
+  int btn5U_hold_time;
+  int btn5D_hold_time;
+  int btn6U_hold_time;
+  int btn6D_hold_time;
+  int btn7U_hold_time;
+  int btn7D_hold_time;
+  int btn7L_hold_time;
+  int btn7R_hold_time;
+  int btn8U_hold_time;
+  int btn8D_hold_time;
+  int btn8L_hold_time;
+  int btn8R_hold_time;
+
   // analog stick values (left/right, horizontal/vertical)
   int analogRH;
   int analogRV;
@@ -68,7 +82,6 @@ private:
 
   // whether this refers to a primary or partner joystick
   int j;
-
 };
 
 #ifdef __cplusplus

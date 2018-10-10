@@ -46,6 +46,20 @@ void Joystick :: update() {
   btn8L_new = (raw_8L && !btn8L) - (!raw_8L && btn8L);
   btn8R_new = (raw_8R && !btn8R) - (!raw_8R && btn8R);
 
+  // update button hold times
+  int btn5U_hold_time = (raw_5U && !btn5U_new) ? btn5U_hold_time + millis() - updated : 0;
+  int btn5D_hold_time = (raw_5D && !btn5D_new) ? btn5D_hold_time + millis() - updated : 0;
+  int btn6U_hold_time = (raw_6U && !btn6U_new) ? btn6U_hold_time + millis() - updated : 0;
+  int btn6D_hold_time = (raw_6D && !btn6D_new) ? btn6D_hold_time + millis() - updated : 0;
+  int btn7U_hold_time = (raw_7U && !btn7U_new) ? btn7U_hold_time + millis() - updated : 0;
+  int btn7D_hold_time = (raw_7D && !btn7D_new) ? btn7D_hold_time + millis() - updated : 0;
+  int btn7L_hold_time = (raw_7L && !btn7L_new) ? btn7L_hold_time + millis() - updated : 0;
+  int btn7R_hold_time = (raw_7R && !btn7R_new) ? btn7R_hold_time + millis() - updated : 0;
+  int btn8U_hold_time = (raw_8U && !btn8U_new) ? btn8U_hold_time + millis() - updated : 0;
+  int btn8D_hold_time = (raw_8D && !btn8D_new) ? btn8D_hold_time + millis() - updated : 0;
+  int btn8L_hold_time = (raw_8L && !btn8L_new) ? btn8L_hold_time + millis() - updated : 0;
+  int btn8R_hold_time = (raw_8R && !btn8R_new) ? btn8R_hold_time + millis() - updated : 0;
+
   // update public raw button presses
   btn5U = raw_5U;
   btn5D = raw_5D;
