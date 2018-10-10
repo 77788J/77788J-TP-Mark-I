@@ -34,18 +34,18 @@ void sensorTask() {
 
     // custom sensors
     catapult::limit_switch.update(TASK_SENSOR_INTERVAL);
-    // chassis::gyro.update(TASK_SENSOR_INTERVAL);
-    // lift::pot.update(TASK_SENSOR_INTERVAL);
+    chassis::gyro.update(TASK_SENSOR_INTERVAL);
+    lift::pot.update(TASK_SENSOR_INTERVAL);
 
     // general subsystem stats
-    // chassis::updateStats(TASK_CONTROL_INTERVAL);
-    // lift::updateStats(TASK_CONTROL_INTERVAL);
+    chassis::updateStats(TASK_CONTROL_INTERVAL);
+    lift::updateStats(TASK_CONTROL_INTERVAL);
 
     // custom PIDs
-    // chassis::position_pid_left.update(chassis::left_pos_deg, chassis::left_vel, TASK_SENSOR_INTERVAL);
-    // chassis::position_pid_right.update(chassis::right_pos_deg, chassis::right_vel, TASK_SENSOR_INTERVAL);
-    // chassis::rotation_pid.update(chassis::gyro.getValue(0), chassis::gyro.getVelocity(), TASK_SENSOR_INTERVAL);
-    // lift::pid.update(lift::angle, lift::vel, TASK_SENSOR_INTERVAL);
+    chassis::position_pid_left.update(chassis::left_pos_deg, chassis::left_vel, TASK_SENSOR_INTERVAL);
+    chassis::position_pid_right.update(chassis::right_pos_deg, chassis::right_vel, TASK_SENSOR_INTERVAL);
+    chassis::rotation_pid.update(chassis::gyro.getValue(0), chassis::gyro.getVelocity(), TASK_SENSOR_INTERVAL);
+    lift::pid.update(lift::angle, lift::vel, TASK_SENSOR_INTERVAL);
 
 }
 
@@ -68,17 +68,17 @@ void controlTask() {
         // subsystems
         ball_intake::updateDriverControl();
         catapult::updateDriverControl();
-        // chassis::updateDriverControl();
-        // lift::updateDriverControl();
-        // transmission::updateDriverControl();
+        chassis::updateDriverControl();
+        lift::updateDriverControl();
+        transmission::updateDriverControl();
     }
 
     // general control
     ball_intake::update();
     catapult::update(TASK_CONTROL_INTERVAL);
-    // chassis::update(TASK_CONTROL_INTERVAL);
-    // lift::update(TASK_CONTROL_INTERVAL);
-    // transmission::update(TASK_CONTROL_INTERVAL);
+    chassis::update(TASK_CONTROL_INTERVAL);
+    lift::update(TASK_CONTROL_INTERVAL);
+    transmission::update(TASK_CONTROL_INTERVAL);
 }
 
 // starts all background tasks
