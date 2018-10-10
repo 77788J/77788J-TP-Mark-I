@@ -68,9 +68,26 @@ namespace transmission::lift {
 
     // update controller for driver control
     void updateDriverControl() {
-        setPower((joystick.btn5U - joystick.btn5D) * 100);
+    // setPower((joystick.btn5U - joystick.btn5D) * 100);
+
+        if (joystick.btn5U_new == 1) gotoDegrees(MAX_ANGLE);
+        if (joystick.btn5D_new == 1) gotoDegrees(MIN_ANGLE);
+        if (joystick.btn5U_new == -1 || joystick.btn5D_new == -1) gotoDegrees(angle);
+    }
+    
+    // update lift stats that don't fit in sensors
+    void updateStats(int time_delta) {
+    
+        // calculate angle and height
+        float trans_pos = (all_motors[motor_top_left].getPosition() + all_motors[motor_btm_left].getPosition()) * .5f;
+        float new_pos = pot.getValue(0) * .2f + trans_pos * .8f;
+        vel = vel * .5f + (new_pos - angle) * .5f * 166.666666667f / time_delta;
+        angle = new_pos;
+        height = calcHeight(angle);
     }
 
     // update general chassis controller
-    void update(int time_delta) {}
+    void update(int time_delta) {
+        setPower(pid.get());
+    }
 }

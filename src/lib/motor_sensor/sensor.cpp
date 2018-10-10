@@ -40,10 +40,10 @@ void Sensor :: init(SensorType _type, int _port1, int _port2, bool _reversed, fl
     case (sensor_encoder): encoder_sensor = encoderInit(port1, port2, false); break;
 
     // sensor_gyro
-    case (sensor_gyro): gyro_sensor = gyroInit(port1, extra_data);
+    case (sensor_gyro): gyro_sensor = gyroInit(port1, extra_data); break;
 
     // sensor_custom sensor
-    case (sensor_custom): _customInit();
+    case (sensor_custom): _customInit(); break;
 
     // added cause compiler warnings are annoying
     default: break;

@@ -34,6 +34,13 @@ namespace transmission {
         extern Pid position_pid_right;
         extern Pid rotation_pid;
 
+        // control types
+        enum ControlType {
+            control_manual,
+            control_position,
+            control_rotation
+        };
+
         // variables
         extern float priority;
         extern float desired_power_left;
@@ -44,8 +51,7 @@ namespace transmission {
         extern float right_pos_inches;
         extern float left_vel;
         extern float right_vel;
-        extern float orientation;
-        extern float rotation_vel;
+        extern ControlType control_type;
 
         // control functions
         void setPowerLeft(float p);
@@ -66,6 +72,7 @@ namespace transmission {
 
         // controllers
         void updateDriverControl();
+        void updateStats(int time_delta);
         void update(int delta_time);
     }
 
@@ -104,6 +111,7 @@ namespace transmission {
 
         // controllers
         void updateDriverControl();
+        void updateStats(int time_delta);
         void update(int delta_time);
     }
 

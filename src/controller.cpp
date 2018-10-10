@@ -9,11 +9,13 @@
 #define TASK_SENSOR_INTERVAL 5
 #define TASK_PHYSICAL_MOTOR_INTERVAL 15
 #define TASK_CONTROL_INTERVAL 15
+#define TASK_DEBUG_INTERVAL 100
 
 // variables to store tasks
 TaskHandle sensor_task; // includes motor data updates
 TaskHandle motor_task; // updates physical motors
 TaskHandle control_task; // overall driver control
+TaskHandle debug_task; // debugging task
 
 // global joystick reference
 Joystick joystick;
@@ -24,19 +26,26 @@ namespace lift = transmission::lift;
 
 // sensor task
 void sensorTask() {
+
+    // sensors attached to motors
     for (int i = 0; i < all_motors_count; i++) {
         all_motors[i].updateStats(TASK_SENSOR_INTERVAL);
     }
 
     // custom sensors
     catapult::limit_switch.update(TASK_SENSOR_INTERVAL);
-    lift::pot.update(TASK_SENSOR_INTERVAL);
+    // chassis::gyro.update(TASK_SENSOR_INTERVAL);
+    // lift::pot.update(TASK_SENSOR_INTERVAL);
+
+    // general subsystem stats
+    // chassis::updateStats(TASK_CONTROL_INTERVAL);
+    // lift::updateStats(TASK_CONTROL_INTERVAL);
 
     // custom PIDs
-    chassis::position_pid_left.update(chassis::left_pos_deg, chassis::left_vel, TASK_SENSOR_INTERVAL);
-    chassis::position_pid_right.update(chassis::right_pos_deg, chassis::right_vel, TASK_SENSOR_INTERVAL);
-    chassis::rotation_pid.update(chassis::orientation, chassis::rotation_vel, TASK_SENSOR_INTERVAL);
-    lift::pid.update(lift::angle, lift::vel, TASK_SENSOR_INTERVAL);
+    // chassis::position_pid_left.update(chassis::left_pos_deg, chassis::left_vel, TASK_SENSOR_INTERVAL);
+    // chassis::position_pid_right.update(chassis::right_pos_deg, chassis::right_vel, TASK_SENSOR_INTERVAL);
+    // chassis::rotation_pid.update(chassis::gyro.getValue(0), chassis::gyro.getVelocity(), TASK_SENSOR_INTERVAL);
+    // lift::pid.update(lift::angle, lift::vel, TASK_SENSOR_INTERVAL);
 
 }
 
@@ -52,23 +61,24 @@ void controlTask() {
 
     // driver control
     if (isEnabled() && !isAutonomous()) {
+
         // joystick update
         joystick.update();
 
         // subsystems
         ball_intake::updateDriverControl();
         catapult::updateDriverControl();
-        chassis::updateDriverControl();
-        lift::updateDriverControl();
-        transmission::updateDriverControl();
+        // chassis::updateDriverControl();
+        // lift::updateDriverControl();
+        // transmission::updateDriverControl();
     }
 
     // general control
     ball_intake::update();
     catapult::update(TASK_CONTROL_INTERVAL);
-    chassis::update(TASK_CONTROL_INTERVAL);
-    lift::update(TASK_CONTROL_INTERVAL);
-    transmission::update(TASK_CONTROL_INTERVAL);
+    // chassis::update(TASK_CONTROL_INTERVAL);
+    // lift::update(TASK_CONTROL_INTERVAL);
+    // transmission::update(TASK_CONTROL_INTERVAL);
 }
 
 // starts all background tasks
@@ -76,4 +86,5 @@ void startAllTasks() {
     sensor_task = taskRunLoop(sensorTask, TASK_SENSOR_INTERVAL);
     motor_task = taskRunLoop(motorTask, TASK_PHYSICAL_MOTOR_INTERVAL);
     control_task = taskRunLoop(controlTask, TASK_CONTROL_INTERVAL);
+    debug_task = taskRunLoop(debugTask, TASK_DEBUG_INTERVAL);
 }

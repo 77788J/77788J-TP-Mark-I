@@ -12,6 +12,7 @@ void initialize() {
     // initialize subsystems
     ball_intake::init();
     catapult::init();
+    transmission::init();
 
     // start all tasks
     startAllTasks();

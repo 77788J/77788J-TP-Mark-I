@@ -26,6 +26,13 @@ float maxMag(float a, float b) {
   return (fabs(a) > fabs(b)) ? a : b;
 }
 
+// returns the median of three values
+float median(float a, float b, float c) {
+  return ((a > b) == (a < c)) ? a : (
+         ((b > a) == (b < c)) ? b : 
+                            c);
+}
+
 // constrains a value between two values
 float clamp(float val, float min, float max) {
   if (val > max) return max;
