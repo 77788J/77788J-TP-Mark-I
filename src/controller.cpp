@@ -67,7 +67,7 @@ void controlTask() {
 
         // subsystems
         ball_intake::updateDriverControl();
-        cap_flipper::updateDriverControl();
+        cap_manipulator::updateDriverControl();
         catapult::updateDriverControl();
         chassis::updateDriverControl();
         lift::updateDriverControl();
@@ -76,7 +76,7 @@ void controlTask() {
 
     // general control
     ball_intake::update();
-    cap_flipper::update(TASK_CONTROL_INTERVAL);
+    cap_manipulator::update(TASK_CONTROL_INTERVAL);
     catapult::update(TASK_CONTROL_INTERVAL);
     chassis::update(TASK_CONTROL_INTERVAL);
     lift::update(TASK_CONTROL_INTERVAL);

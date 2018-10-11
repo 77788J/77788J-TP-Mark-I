@@ -101,7 +101,7 @@ namespace transmission::chassis {
         // init motors
         int left_ports[10] = {6};
         int right_ports[10] = {5};
-        left_enc.init(sensor_encoder, 2, 3, false, 7.f / 3.f, NULL, NULL);
+        right_enc.init(sensor_encoder, 2, 3, false, 7.f / 3.f, NULL, NULL);
         left_enc.init(sensor_encoder, 4, 5, false, 7.f / 3.f, NULL, NULL);
         motor_left = motorInit(left_ports, NULL, &left_enc);
         motor_right = motorInit(right_ports, NULL, &right_enc);

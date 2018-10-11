@@ -11,6 +11,7 @@ void initialize() {
 
     // initialize subsystems
     ball_intake::init();
+    cap_manipulator::init();
     catapult::init();
     transmission::init();
 
