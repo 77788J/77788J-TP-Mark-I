@@ -1,8 +1,5 @@
 #include "lib/lcd.hpp"
 
-// default initializer
-Lcd :: Lcd() {}
-
 // actual initializer
 void Lcd :: init(FILE *port_) {
 
@@ -27,8 +24,9 @@ const char * Lcd :: getText(int line_) {
 // sets the text on the specified line
 void Lcd :: setText(int line_, const char *text_) {
 
-  // update varaible
-  text_top = text_;
+  // update variable
+  if (line_ == 0) text_top = text_;
+  if (line_ == 1) text_bottom = text_;
 
   // update physical LCD
   lcdSetText(port, line_ + 1, text_); // lcdSetText takes 1 or 2, so line_ (0 or 1) must be translated into that range
@@ -56,4 +54,24 @@ void Lcd :: updateButtons() {
   btn_l = btn_l_raw;
   btn_m = btn_m_raw;
   btn_r = btn_r_raw;
+}
+
+// waits for a button to be pressed
+LcdButton Lcd :: waitForInteraction(int interval, int timeout) {
+
+  // initialize variables
+  int elasped_time = 0;
+
+  // wait for buttons
+  while (!(btn_l || btn_m || btn_r) || (timeout > 0 && elasped_time > timeout)) {
+    delay(interval);
+    elasped_time += interval;
+    updateButtons();
+  }
+
+  // return currently pressed button
+  if (btn_l) return lcd_button_left;
+  if (btn_m) return lcd_button_left;
+  if (btn_r) return lcd_button_left;
+  return lcd_button_none;
 }
