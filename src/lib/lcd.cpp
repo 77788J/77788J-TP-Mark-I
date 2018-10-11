@@ -1,5 +1,25 @@
 #include "lib/lcd.hpp"
 
+// center text within specific boundaries
+void centerText(const char *string, int new_size, char *out) {
+
+  // get length of original string
+  float size = strlen(string);
+
+  // store leading padding
+  for (int i = 0; i < floor((new_size - size) / 2.f); i++) {
+    strcat(out, " ");
+  }
+
+  // store actual string
+  strcat(out, string);
+
+  // store lagging padding
+  for (int i = 0; i < ceil((new_size - size) / 2.f); i++) {
+    strcat(out, " ");
+  }
+}
+
 // actual initializer
 void Lcd :: init(FILE *port_) {
 

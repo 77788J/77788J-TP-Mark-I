@@ -1,4 +1,4 @@
-#include <autonomous_picker.hpp>
+#include <lib/autonomous_picker.hpp>
 
 namespace autonomous_picker {
 
@@ -32,13 +32,19 @@ namespace autonomous_picker {
       case (2): {
         
         // make top row say current item's title
-        lcd->setText(0, centerText(item.title, 16));
+        char top_text[16];
+        centerText(item.title, 16, top_text);
+        lcd->setText(0, top_text);
 
         // make bottom row display the options and back ('<')
         char bottom_text[16];
         strcpy(bottom_text, "<");
-        strcat(bottom_text, centerText((*(item.submenu + 0)).title, 8)); // first option
-        strcat(bottom_text, centerText((*(item.submenu + 1)).title, 7)); // second option
+        char center_option_text[16];
+        centerText((*(item.submenu + 0)).title, 8, center_option_text);
+        strcat(bottom_text, center_option_text); // first option
+        char right_option_text[16];
+        centerText((*(item.submenu + 1)).title, 7, right_option_text);
+        strcat(bottom_text, right_option_text); // second option
         lcd->setText(1, bottom_text); // update LCD text visibly
 
         // wait for user interaction
@@ -61,7 +67,9 @@ namespace autonomous_picker {
         LcdButton choice = lcd_button_none; // start with nothing pressed
 
         // make top row say current item's title
-        lcd->setText(0, centerText(item.title, 16));
+        char top_text[16];
+        centerText(item.title, 16, top_text);
+        lcd->setText(0, top_text);
 
         // loop until an option is selected
         while (choice != lcd_button_middle) {
@@ -69,7 +77,9 @@ namespace autonomous_picker {
           // make bottom row display the currently visible option and arrows/whitespace for left/right
           char bottom_text[16];
           strcpy(bottom_text, (current_option > -1) ? "<" : " "); // either show '<' or ' ' depending on if there's an option to the left
-          strcat(bottom_text, centerText((*(item.submenu + current_option)).title, 7)); // first option
+          char selected[16];
+          centerText((*(item.submenu + current_option)).title, 7, selected);
+          strcat(bottom_text, selected); // selected option
           strcat(bottom_text, (current_option < item.submenu_size - 1) ? ">" : " "); // either show '>' or ' ' depending on if there's an option to the right
           lcd->setText(1, bottom_text); // update LCD text visibly
 

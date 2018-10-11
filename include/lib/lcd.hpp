@@ -14,29 +14,7 @@ enum LcdButton {
 };
 
 // center text within specific boundaries
-const char *centerText(const char *string, int new_size) {
-
-  // get length of original string
-  float size = strlen(string);
-
-  // create string variable
-  char result[16];
-
-  // store leading padding
-  for (int i = 0; i < floor((new_size - size) / 2.f); i++) {
-    strcat(result, " ");
-  }
-
-  // store actual string
-  strcat(result, string);
-
-  // store lagging padding
-  for (int i = 0; i < ceil((new_size - size) / 2.f); i++) {
-    strcat(result, " ");
-  }
-
-  return result;
-}
+void centerText(const char *string, int new_size, char *out);
 
 class Lcd {
 

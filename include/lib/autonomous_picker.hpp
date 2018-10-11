@@ -1,7 +1,7 @@
 #ifndef AUTONOMOUS_PICKER_H_
 #define AUTONOMOUS_PICKER_H_
 
-#include <lcd.hpp>
+#include <lib/lcd.hpp>
 
 namespace autonomous_picker {
 
