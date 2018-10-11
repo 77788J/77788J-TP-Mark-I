@@ -89,9 +89,17 @@ LcdButton Lcd :: waitForInteraction(int interval, int timeout) {
     updateButtons();
   }
 
+  LcdButton choice;
+  if (btn_l) choice = lcd_button_left;
+  else if (btn_m) choice = lcd_button_middle;
+  else if (btn_r) choice = lcd_button_right;
+  else choice = lcd_button_none;
+
+  while (btn_l || btn_m || btn_r) {
+    delay(interval);
+    updateButtons();
+  }
+
   // return currently pressed button
-  if (btn_l) return lcd_button_left;
-  if (btn_m) return lcd_button_left;
-  if (btn_r) return lcd_button_left;
-  return lcd_button_none;
+  return choice;
 }

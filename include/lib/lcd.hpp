@@ -33,10 +33,6 @@ public:
   int btn_m_new;
   int btn_r_new;
 
-  // default initializer
-  // MAKE SURE TO FULLY INITIALIZE WITH <Lcd>.init()
-  Lcd();
-
   // actually initializes the joystick
   void init(FILE *port_);
 

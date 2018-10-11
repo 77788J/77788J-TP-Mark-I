@@ -30,6 +30,8 @@ namespace autonomous_picker {
 
       // if there's 2 options, map each button to one option, and one button to back
       case (2): {
+
+        lcdClear(uart1);
         
         // make top row say current item's title
         char top_text[16];
@@ -62,6 +64,8 @@ namespace autonomous_picker {
       // if there's more than 3 options, scroll through all options
       default: {
 
+        lcdClear(uart1);
+
         // variables
         int current_option = 0; // currently visible option
         LcdButton choice = lcd_button_none; // start with nothing pressed
@@ -74,14 +78,19 @@ namespace autonomous_picker {
         // loop until an option is selected
         while (choice != lcd_button_middle) {
 
+          lcdClear(uart1);
+
           // make bottom row display the currently visible option and arrows/whitespace for left/right
-          char bottom_text[16];
-          strcpy(bottom_text, (current_option > -1) ? "<" : " "); // either show '<' or ' ' depending on if there's an option to the left
-          char selected[16];
-          centerText((*(item.submenu + current_option)).title, 7, selected);
-          strcat(bottom_text, selected); // selected option
-          strcat(bottom_text, (current_option < item.submenu_size - 1) ? ">" : " "); // either show '>' or ' ' depending on if there's an option to the right
-          lcd->setText(1, bottom_text); // update LCD text visibly
+          if (current_option == -1) lcd->setText(1, "      BACK     >"); // update LCD text to 'BACK' visibly
+          else {
+            char bottom_text[16];
+            strcpy(bottom_text, (current_option > -1) ? "<" : " "); // either show '<' or ' ' depending on if there's an option to the left
+            char selected[16];
+            centerText((*(item.submenu + current_option)).title, 14, selected);
+            strcat(bottom_text, selected); // selected option
+            strcat(bottom_text, (current_option < item.submenu_size - 1) ? ">" : " "); // either show '>' or ' ' depending on if there's an option to the right
+            lcd->setText(1, bottom_text); // update LCD text visibly
+          }
 
           // wait for button press
           choice = lcd->waitForInteraction(5, 0);
