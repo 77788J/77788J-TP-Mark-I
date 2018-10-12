@@ -46,6 +46,10 @@ void initialize() {
     // initialize joystick
     joystick.init(1);
 
+    // turn on all IMEs
+    imeInitializeAll();
+    delay(250);
+
     // initialize subsystems
     ball_intake::init();
     cap_manipulator::init();
@@ -55,5 +59,6 @@ void initialize() {
     // start all tasks
     startAllTasks();
 
-    selectAutonomous();
+    // start autonomous selection
+    // selectAutonomous();
 }

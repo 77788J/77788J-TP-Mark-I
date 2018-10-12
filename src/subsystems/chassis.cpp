@@ -105,6 +105,7 @@ namespace transmission::chassis {
         left_enc.init(sensor_encoder, 4, 5, false, 7.f / 3.f, NULL, NULL);
         motor_left = motorInit(left_ports, NULL, &left_enc);
         motor_right = motorInit(right_ports, NULL, &right_enc);
+        all_motors[motor_right].reversed = true;
 
         // init sensors
         gyro.init(sensor_gyro, 1, 0, false, 196.f, NULL, NULL);

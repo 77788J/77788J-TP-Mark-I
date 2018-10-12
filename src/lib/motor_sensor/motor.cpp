@@ -117,7 +117,7 @@ void Motor :: updatePhysical(int time_delta) {
 
   // loop through and set all physical motors
   for (int i = 0; i < MAX_MOTOR_COUNT; i++) {
-    if (ports[i] && ports[i] > 0) motorSet(ports[i], raw_power);
+    if (ports[i] && ports[i] > 0) motorSet(ports[i], raw_power * (reversed ? -1.f : 1.f));
   }
 
   time_elapsed += time_delta;

@@ -42,6 +42,8 @@ namespace transmission {
         motor_btm_left = motorInit(port_bl, NULL, &ime_bl);
         motor_top_right = motorInit(port_tr, NULL, &ime_tr);
         motor_btm_right = motorInit(port_br, NULL, &ime_br);
+        all_motors[motor_top_left].reversed = true;
+        all_motors[motor_btm_left].reversed = true;
 
         chassis::init();
         lift::init();
@@ -66,8 +68,8 @@ namespace transmission {
         float lift_real = min(lift_ideal, max(lift::priority * 100, lift_ideal + 100 - total));
 
         // calculate multipliers
-        float chassis_scale = chassis_real / chassis_ideal;
-        float lift_scale = lift_real / lift_ideal;
+        float chassis_scale = (chassis_ideal == 0) ? 0 : (chassis_real / chassis_ideal);
+        float lift_scale = (lift_ideal == 0) ? 0 : (lift_real / lift_ideal);
 
         // calculate final subsystem powers
         float chassis_power_left = chassis::desired_power_left * chassis_scale;

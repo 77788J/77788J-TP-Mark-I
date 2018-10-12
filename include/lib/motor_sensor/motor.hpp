@@ -57,6 +57,9 @@ public:
   // velocity control tuning parameter
   float kvel;
 
+  // is reversed?
+  bool reversed;
+
   // mode of motor
   MotorMode mode;
 
