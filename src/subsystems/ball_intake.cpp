@@ -1,4 +1,5 @@
 #include "subsystems/ball_intake.hpp"
+#include "subsystems/catapult.hpp"
 #include "lib/motor_sensor/motor.hpp"
 #include "controller.hpp"
 
@@ -34,6 +35,7 @@ namespace ball_intake {
 
     // update general ball intake controller
     void update() {
-        all_motors[motor].setPower(100 * intake_dir, true);
+        if (catapult::is_shooting) all_motors[motor].setPower(0, true);
+        else all_motors[motor].setPower(100 * intake_dir, true);
     }
 }

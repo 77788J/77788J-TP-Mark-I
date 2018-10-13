@@ -1,4 +1,5 @@
 #include "subsystems/catapult.hpp"
+#include "subsystems/ball_intake.hpp"
 #include "lib/motor_sensor/motor.hpp"
 #include "controller.hpp"
 
@@ -46,7 +47,12 @@ namespace catapult {
     void updateDriverControl() {
 
         // shoot catapult if button pressed
-        if (joystick.btn8D_new == 1) fire();
+        if (joystick.btn8D_new == 1) {
+            ball_intake::setDirection(-1);
+            delay(150);
+            fire();
+            ball_intake::setDirection(0);
+        }
     }
 
     // update general catapult controller

@@ -85,12 +85,13 @@ namespace transmission {
     namespace lift {
 
         // constants
-        #define BOTTOM_BAR_LEN 12.5f
-        #define TOP_BAR_LEN 17.5f
+        #define BOTTOM_BAR_LEN 11.f
+        #define TOP_BAR_LEN 12.f
         #define NEUTRAL_HEIGHT 19.f
-        #define MIN_ANGLE 0.f
-        #define BALL_LOAD_ANGLE 40.f
-        #define MAX_ANGLE 500.f
+        #define MIN_ANGLE -200.f
+        #define MIN_LEGAL_ANGLE -100.f
+        #define DESCORE_ANGLE 0.f
+        #define MAX_ANGLE 200.f
 
         // sensors
         extern Sensor pot;

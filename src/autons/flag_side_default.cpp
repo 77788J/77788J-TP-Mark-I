@@ -2,12 +2,10 @@
 #include "subsystems/subsystems.hpp"
 
 void autons::flagSideDefault(Side side, bool park) {
+    bool angle_mult = side == side_blue ? -1.f : 1.f;
 
     // start ball intake
     ball_intake::setDirection(1);
-
-    // raise lift some
-    lift::gotoDegrees(BALL_LOAD_ANGLE);
 
     // move to cap
     chassis::moveInches(45.f);
@@ -27,7 +25,7 @@ void autons::flagSideDefault(Side side, bool park) {
     chassis::waitForCompletion(10.f, 10);
 
     // rotate towards flags
-    chassis::rotateTo(90.f * (side == side_blue ? -1.f : 1.f));
+    chassis::rotateTo(90.f * angle_mult);
     chassis::waitForCompletion(10.f, 5);
 
     // launch ball at top flag
@@ -43,7 +41,7 @@ void autons::flagSideDefault(Side side, bool park) {
     delay(150);
 
     // rotate to cap and open intake
-    chassis::rotateTo(0.f * (side == side_blue ? -1.f : 1.f));
+    chassis::rotateTo(0.f * angle_mult);
     chassis::waitForCompletion(10.f, 5);
 
     // reset relative position
@@ -66,7 +64,7 @@ void autons::flagSideDefault(Side side, bool park) {
     if (park) {
 
         // rotate to face away from flags
-        chassis::rotateTo(90.f * (side == side_blue ? -1.f : 1.f));
+        chassis::rotateTo(90.f * angle_mult);
         chassis::waitForCompletion(10.f, 5);
 
         // move in line with parking tiles
@@ -74,7 +72,7 @@ void autons::flagSideDefault(Side side, bool park) {
         chassis::waitForCompletion(10.f, 10);
 
         // rotate to face parking tile
-        chassis::rotateTo(0.f * (side == side_blue ? -1.f : 1.f));
+        chassis::rotateTo(0.f * angle_mult);
         chassis::waitForCompletion(10.f, 5);
 
         // drive onto parking tile
