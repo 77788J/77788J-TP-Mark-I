@@ -7,4 +7,8 @@
 #include <subsystems/catapult.hpp>
 #include <subsystems/transmission.hpp>
 
+// simplify namespaces
+namespace chassis = transmission::chassis;
+namespace lift = transmission::lift;
+
 #endif

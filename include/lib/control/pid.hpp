@@ -22,11 +22,14 @@ public:
   // reset integral on target change?
   bool integral_reset;
 
+  // initializer/resetter
+  void init(float _target, float _kp, float _ki, float _kd);
+
   // get the most recent calculation
   float get();
 
-  // initializer/resetter
-  void init(float _target, float _kp, float _ki, float _kd);
+  // tells whether or not the PID target has been reached within a specific precision
+  bool isAtTarget(float precision);
 
   // update the calculation (leave vel and accel null to use internal calculations)
   float update(float current, float given_vel, float time_delta);

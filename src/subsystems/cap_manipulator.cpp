@@ -23,6 +23,7 @@ namespace cap_manipulator {
         int ports[10] = {4};
         pot.init(sensor_potentiometer, 2, 0, false, 1.f, NULL, NULL);
         motor = motorInit(ports, NULL, &pot);
+        all_motors[motor].pid.kp = 5.f;
 
         // init pistons
         pinMode(PNEUMATIC_PORTA, OUTPUT);
@@ -60,16 +61,10 @@ namespace cap_manipulator {
     void updateDriverControl() {
 
         // extend/retract if button released and was not held
-        if (joystick.btn6D_new == -1 && !has_flipped) setExtended(!extended);
+        if (joystick.btn6D_new == -1) setExtended(!extended);
 
-        // flip if button held for over 500 ms
-        if (joystick.btn6D_hold_time >= 500) {
-            if (!has_flipped) {
-                flip();
-                has_flipped = true;
-            }
-        }
-        else has_flipped = false;
+        // flip
+        if (joystick.btn8U_new == 1) flip();
     }
 
     // update general cap flipper controller

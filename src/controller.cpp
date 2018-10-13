@@ -20,10 +20,6 @@ TaskHandle debug_task; // debugging task
 // global joystick reference
 Joystick joystick;
 
-// simplify transmission namespace
-namespace chassis = transmission::chassis;
-namespace lift = transmission::lift;
-
 // sensor task
 void sensorTask() {
 

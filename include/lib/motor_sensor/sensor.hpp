@@ -52,6 +52,11 @@ public:
   // > scale for gyro
   float extra_data;
 
+  // sensor objects for special sensors
+  Ultrasonic sonar_sensor;
+  Encoder encoder_sensor;
+  Gyro gyro_sensor;
+
   // initialize sensor
   // > leave _customInit and _customUpdate null if not using custom sensor
   // > leave _extra_data null if no extra data is required
@@ -76,11 +81,6 @@ private:
 
   // type of sensor
   SensorType type;
-
-  // sensor objects for special sensors
-  Ultrasonic sonar_sensor;
-  Encoder encoder_sensor;
-  Gyro gyro_sensor;
 
   // pointer to update function of custom sensor
   float (*customUpdate)();

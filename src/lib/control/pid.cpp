@@ -23,6 +23,11 @@ float Pid :: get() {
   return result;
 }
 
+// tells whether or not the PID target has been reached within a specific precision
+bool Pid :: isAtTarget(float precision) {
+  return fabs(target - result) <= precision;
+}
+
 // update the calculation (leave vel and accel null to use internal calculations)
 float Pid :: update(float current, float given_vel, float time_delta) {
 

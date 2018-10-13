@@ -30,7 +30,20 @@ namespace transmission::chassis {
     float right_pos_inches = 0;
     float left_vel = 0;
     float right_vel = 0;
+    float left_pos_offset = 0;
+    float right_pos_offset = 0;
     ControlType control_type = control_manual;
+
+    // reset relative position to 0
+    void resetPosition() {
+        left_pos_offset = left_pos_deg;
+        right_pos_offset = right_pos_deg;
+    }
+
+    // reset relative orientation to 0
+    void resetOrientation() {
+        gyroReset(gyro.gyro_sensor);
+    }
 
     // set power of left side
     void setPowerLeft(float p) {
@@ -95,6 +108,19 @@ namespace transmission::chassis {
         rotateTo(gyro.getValue(0) + deg);
     }
 
+    // wait for current activity to finish
+    void waitForCompletion(float precision, int timeout) {
+        int elapsed_time = 0;
+        while (true) {
+            if (elapsed_time > timeout) break;
+            if (control_type == control_manual) break;
+            if (control_type == control_position && !(position_pid_left.isAtTarget(precision) && position_pid_right.isAtTarget(precision))) break;
+            if (control_type == control_rotation && !rotation_pid.isAtTarget(precision)) break;
+            delay(5);
+            elapsed_time += 5;
+        }
+    }
+
     // initializer
     void init() {
 
@@ -129,14 +155,14 @@ namespace transmission::chassis {
         float trans_pos = (-all_motors[motor_top_left].getPosition() + all_motors[motor_btm_left].getPosition()) * .5f;
         float new_pos = all_motors[motor_left].getPosition() * .5f + trans_pos * .5f;
         left_vel = left_vel * .5f + (new_pos - left_pos_deg) * .5f * 166.666666667f / time_delta;
-        left_pos_deg = new_pos;
+        left_pos_deg = new_pos - left_pos_offset;
         left_pos_inches = WHEEL_SIZE * M_PI * left_pos_deg / 360.f;
 
         // calculate right side stats
         trans_pos = (-all_motors[motor_top_right].getPosition() + all_motors[motor_btm_right].getPosition()) * .5f;
         new_pos = all_motors[motor_right].getPosition() * .5f + trans_pos * .5f;
         right_vel = right_vel * .5f + (new_pos - right_pos_deg) * .5f * 166.666666667f / time_delta;
-        right_pos_deg = new_pos;
+        right_pos_deg = new_pos - right_pos_offset;
         right_pos_inches = WHEEL_SIZE * M_PI * right_pos_deg / 360.f;
     }
 

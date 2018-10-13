@@ -54,6 +54,8 @@ namespace transmission {
         extern ControlType control_type;
 
         // control functions
+        void resetPosition();
+        void resetOrientation();
         void setPowerLeft(float p);
         void setPowerRight(float p);
         void setPower(float p);
@@ -66,6 +68,9 @@ namespace transmission {
         void moveInches(float dist);
         void rotateTo(float deg);
         void rotateBy(float deg);
+        
+        // wait for current activity to finish
+        void waitForCompletion(float precision, int timeout);
 
         // initializer
         void init();
@@ -84,8 +89,8 @@ namespace transmission {
         #define TOP_BAR_LEN 17.5f
         #define NEUTRAL_HEIGHT 19.f
         #define MIN_ANGLE 0.f
-        #define BALL_LOAD_ANGLE 25.f
-        #define MAX_ANGLE 300.f
+        #define BALL_LOAD_ANGLE 40.f
+        #define MAX_ANGLE 500.f
 
         // sensors
         extern Sensor pot;
