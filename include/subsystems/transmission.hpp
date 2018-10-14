@@ -88,10 +88,10 @@ namespace transmission {
         #define BOTTOM_BAR_LEN 11.f
         #define TOP_BAR_LEN 12.f
         #define NEUTRAL_HEIGHT 19.f
-        #define MIN_ANGLE -200.f
-        #define MIN_LEGAL_ANGLE -100.f
-        #define DESCORE_ANGLE 0.f
-        #define MAX_ANGLE 200.f
+        #define MIN_ANGLE 0.f
+        #define MIN_LEGAL_ANGLE 50.f
+        #define DESCORE_ANGLE 200.f
+        #define MAX_ANGLE 400.f
 
         // sensors
         extern Sensor pot;

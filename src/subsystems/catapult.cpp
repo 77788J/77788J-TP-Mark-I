@@ -49,7 +49,7 @@ namespace catapult {
         // shoot catapult if button pressed
         if (joystick.btn8D_new == 1) {
             ball_intake::setDirection(-1);
-            delay(150);
+            delay(300);
             fire();
             ball_intake::setDirection(0);
         }

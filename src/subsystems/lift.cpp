@@ -63,7 +63,7 @@ namespace transmission::lift {
         pot.init(sensor_potentiometer, 2, 0, false, 0, NULL, NULL);
 
         // init control algorithms
-        pid.init(MIN_ANGLE, 1.f, 0.f ,0.f);
+        pid.init(MIN_ANGLE, 1.f, .001f, 10.f);
     }
 
     // update controller for driver control

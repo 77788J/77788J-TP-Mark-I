@@ -1,16 +1,19 @@
 #ifndef AUTONS_H_
 #define AUTONS_H_
 
+#define RED = 0
+#define BLUE = 1
+
 namespace autons {
 
-    enum Side {
-        side_red = false,
-        side_blue = true
-    };
+    extern bool selected;
+    extern int color;
+    extern int side;
+    extern int park;
 
-    void flagSideDefault(Side side, bool park);
-    void capSideDefault(Side side, bool park);
-    void kyleCompliment(Side side);
+    void flagSideDefault(int side, bool park);
+    void capSideDefault(int side, bool park);
+    void kyleCompliment(int side);
 
 }
 

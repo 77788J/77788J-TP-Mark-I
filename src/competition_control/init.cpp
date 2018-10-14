@@ -2,38 +2,57 @@
 #include "controller.hpp"
 #include "subsystems/subsystems.hpp"
 #include "lib/autonomous_picker.hpp"
+#include "autons.hpp"
 
 Lcd lcd;
+
+bool autons::selected = false;
+int autons::color = 0;
+int autons::side = 0;
+int autons::park = 0;
 
 void selectAutonomous() {
     namespace picker = autonomous_picker;
 
-    picker::LcdMenuItem red_sides[2] = {
-        picker::LcdMenuItem(1, "LEFT", false, NULL, NULL),
-        picker::LcdMenuItem(2, "RIGHT", false, NULL, NULL)
-    };
-
-    picker::LcdMenuItem blue_sides[2] = {
-        picker::LcdMenuItem(3, "LEFT", false, NULL, NULL),
-        picker::LcdMenuItem(4, "RIGHT", false, NULL, NULL)
-    };
-
     picker::LcdMenuItem colors[2] = {
-        picker::LcdMenuItem(0, "RED", true, 2, red_sides),
-        picker::LcdMenuItem(0, "BLUE", true, 2, blue_sides)
+        picker::LcdMenuItem(0, "RED", false, NULL, NULL),
+        picker::LcdMenuItem(1, "BLUE", false, NULL, NULL)
     };
 
-    picker::LcdMenuItem programs[3] = {
-        picker::LcdMenuItem(5, "STD BALL", false, NULL, NULL),
-        picker::LcdMenuItem(6, "STD CAP", false, NULL, NULL),
-        picker::LcdMenuItem(7, "KYLE", false, NULL, NULL)
+    picker::LcdMenuItem sides[2] = {
+        picker::LcdMenuItem(0, "FLAG", false, NULL, NULL),
+        picker::LcdMenuItem(1, "CAP", false, NULL, NULL)
     };
 
-    picker::LcdMenuItem color = picker::LcdMenuItem(0, "COLOR", true, 2, colors);
-    picker::LcdMenuItem program = picker::LcdMenuItem(0, "PROGRAM", true, 3, programs);
-    int sel_color = picker::loadItem(color, &lcd);
-    int sel_prgm = picker::loadItem(program, &lcd);
-    printf("POS: %d\tPRGM: %d\n", sel_color, sel_prgm);
+    picker::LcdMenuItem will_park[2] = {
+        picker::LcdMenuItem(0, "NO", false, NULL, NULL),
+        picker::LcdMenuItem(1, "YES", false, NULL, NULL)
+    };
+
+    picker::LcdMenuItem color_picker = picker::LcdMenuItem(0, "COLOR", true, 2, colors);
+    picker::LcdMenuItem side_picker = picker::LcdMenuItem(0, "SIDE", true, 2, sides);
+    picker::LcdMenuItem park_picker = picker::LcdMenuItem(0, "PARK", true, 2, will_park);
+
+    int selections[3] = {0, 0, 0};
+    int current = 0;
+
+    while (current < 3) {
+        int p;
+        switch (current) {
+
+            case (0): p = picker::loadItem(color_picker, &lcd); break;
+            case (1): p = picker::loadItem(side_picker, &lcd); break;
+            case (2): p = picker::loadItem(park_picker, &lcd); break;
+
+            if (p == -1) --current;
+            else selections[current] = p;
+
+        }
+    }
+
+    autons::color = selections[0];
+    autons::side = selections[1];
+    autons::park = selections[2];
 }
 
 void initializeIO() {}
@@ -57,7 +76,7 @@ void initialize() {
     transmission::init();
 
     // start all tasks
-    startAllTasks();
+    // startAllTasks();
 
     // start autonomous selection
     // selectAutonomous();

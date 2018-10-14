@@ -1,8 +1,8 @@
 #include "autons.hpp"
 #include "subsystems/subsystems.hpp"
 
-void autons::flagSideDefault(Side side, bool park) {
-    bool angle_mult = side == side_blue ? -1.f : 1.f;
+void autons::flagSideDefault(int side, bool park) {
+    bool angle_mult = side ? 1.f : -1.f;
 
     // start ball intake
     ball_intake::setDirection(1);
