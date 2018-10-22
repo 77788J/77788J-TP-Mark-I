@@ -5,6 +5,8 @@
 
 namespace ball_intake {
 
+    extern bool in_macro;
+
     // motor
     extern int motor;
 

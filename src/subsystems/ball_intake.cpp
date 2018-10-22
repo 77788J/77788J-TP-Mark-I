@@ -4,6 +4,7 @@
 #include "controller.hpp"
 
 namespace ball_intake {
+    bool in_macro = false;
 
     // motor declaration
     int motor;

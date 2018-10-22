@@ -3,6 +3,8 @@
 #include "controller.hpp"
 
 namespace cap_manipulator {
+    
+    bool in_macro = false;
 
     // motor declaration
     int motor;

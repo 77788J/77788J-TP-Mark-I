@@ -19,6 +19,8 @@ namespace transmission {
     // chassis-specific stuff
     namespace chassis {
 
+        extern bool in_macro;
+
         // constants
         #define WHEEL_SIZE 4.125f
 
@@ -83,6 +85,8 @@ namespace transmission {
 
     // lift-specific stuff
     namespace lift {
+        
+        extern bool in_macro;
 
         // constants
         #define BOTTOM_BAR_LEN 11.f

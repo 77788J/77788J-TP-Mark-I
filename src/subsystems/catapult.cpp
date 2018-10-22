@@ -4,6 +4,8 @@
 #include "controller.hpp"
 
 namespace catapult {
+    
+    bool in_macro = false;
 
     // motor/sensor declarations
     int motors;

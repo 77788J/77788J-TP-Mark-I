@@ -5,6 +5,8 @@
 #include "math.h"
 
 namespace transmission::chassis {
+    
+    bool in_macro = false;
 
     // motors
     int motor_left;

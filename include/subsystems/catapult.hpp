@@ -6,6 +6,8 @@
 
 namespace catapult {
 
+    extern bool in_macro;
+
     // motors/sensors
     extern int motors;
     extern Sensor limit_switch;

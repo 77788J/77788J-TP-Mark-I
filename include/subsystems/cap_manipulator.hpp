@@ -3,6 +3,8 @@
 
 namespace cap_manipulator {
 
+    extern bool in_macro;
+
     // pneumatic ports
     #define PNEUMATIC_PORTA 6
     #define PNEUMATIC_PORTB 7

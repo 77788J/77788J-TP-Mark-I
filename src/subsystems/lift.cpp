@@ -5,6 +5,8 @@
 #include "math.h"
 
 namespace transmission::lift {
+    
+    bool in_macro = false;
 
     // sensors
     Sensor pot;

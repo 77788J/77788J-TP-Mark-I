@@ -68,8 +68,6 @@ void controlTask() {
         chassis::updateDriverControl();
         lift::updateDriverControl();
         transmission::updateDriverControl();
-
-        motorSet(4, (joystick.btn7R - joystick.btn7L) * -100);
     }
 
     // general control
