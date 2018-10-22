@@ -146,6 +146,10 @@ namespace transmission::chassis {
 
     // update controller for driver control
     void updateDriverControl() {
+        
+        // stop macro if in macro and driven
+        if (in_macro && (fabs(joystick.analogLV) > 0 || fabs(joystick.analogRV) > 0)) stopMacro();
+
         setPower(joystick.analogLV, joystick.analogRV);
         control_type = control_manual;
     }

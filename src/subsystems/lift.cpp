@@ -70,7 +70,9 @@ namespace transmission::lift {
 
     // update controller for driver control
     void updateDriverControl() {
-    // setPower((joystick.btn5U - joystick.btn5D) * 100);
+        
+        // stop macro if in macro and driven
+        if (in_macro && (joystick.btn5U_new == 1 || joystick.btn5D_new == 1)) stopMacro();
 
         if (joystick.btn5U_new == 1) gotoDegrees(MAX_ANGLE);
         if (joystick.btn5D_new == 1) gotoDegrees(MIN_ANGLE);

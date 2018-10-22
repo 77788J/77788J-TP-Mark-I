@@ -61,6 +61,9 @@ namespace cap_manipulator {
     // update controller for driver control
     bool has_flipped = false;
     void updateDriverControl() {
+        
+        // stop macro if in macro and driven
+        if (in_macro && (joystick.btn6D_new == -1 || joystick.btn8U_new == 1)) stopMacro();
 
         // extend/retract if button released and was not held
         if (joystick.btn6D_new == -1) setExtended(!extended);

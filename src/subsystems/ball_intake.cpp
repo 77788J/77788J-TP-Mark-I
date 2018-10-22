@@ -4,6 +4,7 @@
 #include "controller.hpp"
 
 namespace ball_intake {
+    
     bool in_macro = false;
 
     // motor declaration
@@ -30,6 +31,10 @@ namespace ball_intake {
 
     // update controller for driver control
     void updateDriverControl() {
+        
+        // stop macro if in macro and driven
+        if (in_macro && (joystick.btn6U_new == 1 || joystick.btn8L_new == 1)) stopMacro();
+
         if (joystick.btn6U_new == 1) setDirection( 1 - abs(intake_dir)); // toggle positive
         if (joystick.btn8L_new == 1) setDirection(-1 + abs(intake_dir)); // toggle negative
     }

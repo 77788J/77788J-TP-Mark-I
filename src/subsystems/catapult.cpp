@@ -47,6 +47,9 @@ namespace catapult {
 
     // update controller for driver control
     void updateDriverControl() {
+        
+        // stop macro if in macro and driven
+        if (in_macro && (joystick.btn8D_new == 1)) stopMacro();
 
         // shoot catapult if button pressed
         if (joystick.btn8D_new == 1) {
