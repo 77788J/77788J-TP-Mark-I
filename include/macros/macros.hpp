@@ -6,6 +6,9 @@ namespace macros {
     // shoots top flag, moves forward, and shoots bottom
     void shootBothFlags();
 
+    // stops running macro and frees up subsystems
+    void stopMacro();
+
 }
 
 #endif
