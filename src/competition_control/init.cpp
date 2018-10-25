@@ -15,18 +15,18 @@ void selectAutonomous() {
     namespace picker = autonomous_picker;
 
     picker::LcdMenuItem colors[2] = {
-        picker::LcdMenuItem(0, "RED", false, NULL, NULL),
-        picker::LcdMenuItem(1, "BLUE", false, NULL, NULL)
+        picker::LcdMenuItem(0, "RED", false, 0, NULL),
+        picker::LcdMenuItem(1, "BLUE", false, 0, NULL)
     };
 
     picker::LcdMenuItem sides[2] = {
-        picker::LcdMenuItem(0, "FLAG", false, NULL, NULL),
-        picker::LcdMenuItem(1, "CAP", false, NULL, NULL)
+        picker::LcdMenuItem(0, "FLAG", false, 0, NULL),
+        picker::LcdMenuItem(1, "CAP", false, 0, NULL)
     };
 
     picker::LcdMenuItem will_park[2] = {
-        picker::LcdMenuItem(0, "NO", false, NULL, NULL),
-        picker::LcdMenuItem(1, "YES", false, NULL, NULL)
+        picker::LcdMenuItem(0, "NO", false, 0, NULL),
+        picker::LcdMenuItem(1, "YES", false, 0, NULL)
     };
 
     picker::LcdMenuItem color_picker = picker::LcdMenuItem(0, "COLOR", true, 2, colors);

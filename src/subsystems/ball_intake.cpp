@@ -1,7 +1,7 @@
 #include "subsystems/ball_intake.hpp"
 #include "subsystems/catapult.hpp"
 #include "lib/motor_sensor/motor.hpp"
-#include "macros/macros.hpp"
+#include "macros.hpp"
 #include "controller.hpp"
 #include "math.h"
 
@@ -34,7 +34,7 @@ namespace ball_intake {
         motor = motorInit(ports, NULL, NULL);
 
         // init ball identifier
-        ball_identifier.init(sensor_light, 2, NULL, false, NULL, NULL, NULL);
+        ball_identifier.init(sensor_light, 2, 0, false, 0, NULL, NULL);
     }
 
     // change the direction in which the intake spins

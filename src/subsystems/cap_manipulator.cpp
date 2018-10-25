@@ -1,5 +1,6 @@
 #include "subsystems/cap_manipulator.hpp"
 #include "lib/motor_sensor/motor.hpp"
+#include "macros.hpp"
 #include "controller.hpp"
 
 namespace cap_manipulator {
@@ -63,7 +64,7 @@ namespace cap_manipulator {
     void updateDriverControl() {
         
         // stop macro if in macro and driven
-        if (in_macro && (joystick.btn6D_new == -1 || joystick.btn8U_new == 1)) stopMacro();
+        if (in_macro && (joystick.btn6D_new == -1 || joystick.btn8U_new == 1)) macros::stopMacro();
 
         // extend/retract if button released and was not held
         if (joystick.btn6D_new == -1) setExtended(!extended);

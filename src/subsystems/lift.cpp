@@ -1,4 +1,5 @@
 #include "subsystems/transmission.hpp"
+#include "macros.hpp"
 #include "controller.hpp"
 
 #define _USE_MATH_DEFINES
@@ -72,7 +73,7 @@ namespace transmission::lift {
     void updateDriverControl() {
         
         // stop macro if in macro and driven
-        if (in_macro && (joystick.btn5U_new == 1 || joystick.btn5D_new == 1)) stopMacro();
+        if (in_macro && (joystick.btn5U_new == 1 || joystick.btn5D_new == 1)) macros::stopMacro();
 
         if (joystick.btn5U_new == 1) gotoDegrees(MAX_ANGLE);
         if (joystick.btn5D_new == 1) gotoDegrees(MIN_ANGLE);

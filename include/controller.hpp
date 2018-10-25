@@ -1,10 +1,6 @@
 #ifndef CONTROLLER_H_
 #define CONTROLLER_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <lib/joystick.hpp>
 
 // global reference to joystick
@@ -21,9 +17,5 @@ extern TaskHandle sensor_task; // includes motor data updates
 extern TaskHandle motor_task; // updates physical motors
 extern TaskHandle control_task; // overall driver control
 extern TaskHandle debug_task; // debugging task
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

@@ -1,4 +1,5 @@
 #include "subsystems/transmission.hpp"
+#include "macros.hpp"
 #include "controller.hpp"
 
 #define _USE_MATH_DEFINES
@@ -148,7 +149,7 @@ namespace transmission::chassis {
     void updateDriverControl() {
         
         // stop macro if in macro and driven
-        if (in_macro && (fabs(joystick.analogLV) > 0 || fabs(joystick.analogRV) > 0)) stopMacro();
+        if (in_macro && (fabs(joystick.analogLV) > 0 || fabs(joystick.analogRV) > 0)) macros::stopMacro();
 
         setPower(joystick.analogLV, joystick.analogRV);
         control_type = control_manual;

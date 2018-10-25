@@ -1,7 +1,7 @@
 #include "subsystems/catapult.hpp"
 #include "subsystems/ball_intake.hpp"
 #include "lib/motor_sensor/motor.hpp"
-#include "macros/macros.hpp"
+#include "macros.hpp"
 #include "controller.hpp"
 
 namespace catapult {
