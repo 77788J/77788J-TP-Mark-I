@@ -9,8 +9,13 @@ namespace macros {
 
     // macro identifiers
     enum Macro {
+        macro_none,
         macro_shoot_both_flags, // shoots top flag, moves forward, and shoots bottom
+        macro_flip_cap, // moves the lift to flip a grounded cap
     };
+
+    // tells which macro is currently running
+    extern Macro current_active;
 
     // starts a macro
     void startMacro(Macro macro);
@@ -20,6 +25,7 @@ namespace macros {
 
     // macro functions (to run in tasks)
     void shootBothFlags(void *);
+    void flipCap(void *);
 
 }
 

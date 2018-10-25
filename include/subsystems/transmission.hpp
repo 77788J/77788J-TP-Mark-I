@@ -101,7 +101,7 @@ namespace transmission {
         #define TOP_BAR_LEN 12.f
         #define NEUTRAL_HEIGHT 19.f
         #define MIN_ANGLE 0.f
-        #define MIN_LEGAL_ANGLE 50.f
+        #define MAX_LEGAL_ANGLE 50.f
         #define DESCORE_ANGLE 200.f
         #define MAX_ANGLE 400.f
 
@@ -124,6 +124,9 @@ namespace transmission {
         void moveDegrees(float dist);
         void gotoInches(float dist);
         void gotoDegrees(float dist);
+        
+        // wait for current activity to finish
+        void waitForCompletion(float precision, int timeout);
 
         // initializer
         void init();

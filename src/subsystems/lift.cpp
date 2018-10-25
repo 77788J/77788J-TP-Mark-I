@@ -59,6 +59,17 @@ namespace transmission::lift {
         gotoInches(height + dist);
     }
 
+    // wait for current activity to finish
+    void waitForCompletion(float precision, int timeout) {
+        int elapsed_time = 0;
+        while (true) {
+            if (elapsed_time > timeout) break;
+            if (pid.isAtTarget(precision)) break;
+            delay(5);
+            elapsed_time += 5;
+        }
+    }
+
     // initializer
     void init() {
 
@@ -89,10 +100,10 @@ namespace transmission::lift {
         if (joystick.btn5U_new == -1 || joystick.btn5D_new == -1) gotoDegrees(angle);
 
         // function control
-        if (joystick.btn7D) {} // flip
-        if (joystick.btn7R) gotoDegrees(MIN_LEGAL_ANGLE); // flip
-        if (joystick.btn7L) gotoDegrees(MIN_ANGLE); // flip
-        if (joystick.btn7U) gotoDegrees(MAX_ANGLE); // flip
+        if (joystick.btn7D) macros::startMacro(macros::macro_flip_cap); // flip cap
+        if (joystick.btn7R) gotoDegrees(MAX_LEGAL_ANGLE); // goto highest height under 18"
+        if (joystick.btn7L) gotoDegrees(MIN_ANGLE); // lower all the way
+        if (joystick.btn7U) gotoDegrees(MAX_ANGLE); // raise all the way
     }
     
     // update lift stats that don't fit in sensors

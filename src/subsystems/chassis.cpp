@@ -136,8 +136,8 @@ namespace transmission::chassis {
         while (true) {
             if (elapsed_time > timeout) break;
             if (control_type == control_manual) break;
-            if (control_type == control_position && !(position_pid_left.isAtTarget(precision) && position_pid_right.isAtTarget(precision))) break;
-            if (control_type == control_rotation && !rotation_pid.isAtTarget(precision)) break;
+            if (control_type == control_position && (position_pid_left.isAtTarget(precision) && position_pid_right.isAtTarget(precision))) break;
+            if (control_type == control_rotation && rotation_pid.isAtTarget(precision)) break;
             delay(5);
             elapsed_time += 5;
         }
