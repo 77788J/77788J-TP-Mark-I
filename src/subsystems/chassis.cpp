@@ -35,6 +35,7 @@ namespace transmission::chassis {
     float right_vel = 0;
     float left_pos_offset = 0;
     float right_pos_offset = 0;
+    Side front_side = side_shooter_flipper;
     ControlType control_type = control_manual;
 
     // reset relative position to 0
@@ -48,6 +49,11 @@ namespace transmission::chassis {
         gyroReset(gyro.gyro_sensor);
     }
 
+    // determines whether the front is the intake or shooter/flipper
+    void setFront(Side side) {
+        front_side = side;
+    }
+
     // set power of left side
     void setPowerLeft(float p) {
         desired_power_left = p;
@@ -57,10 +63,23 @@ namespace transmission::chassis {
     void setPowerRight(float p) {
         desired_power_right = p;
     }
+
     // set power of both sides to different values
     void setPower(float l, float r) {
         setPowerLeft(l);
         setPowerRight(r);
+    }
+
+    // set power of both sides to different values, accounting for front preference
+    void setPower(float l, float r, bool a) {
+        if (front_side == side_intake) {
+            setPowerLeft(l);
+            setPowerRight(r);
+        }
+        else {
+            setPowerLeft(-r);
+            setPowerRight(-l);
+        }
     }
 
     // set power of both sides to same value
@@ -150,8 +169,12 @@ namespace transmission::chassis {
         
         // stop macro if in macro and driven
         if (in_macro && (fabs(joystick.analogLV) > 0 || fabs(joystick.analogRV) > 0)) macros::stopMacro();
+        
+        // toggle front if correct buttons pressed
+        if (joystick.btn7L && joystick.btn7R_new == 1) setFront(front_side == side_intake ? side_shooter_flipper : side_intake);
 
-        setPower(joystick.analogLV, joystick.analogRV);
+        // drive chassis
+        setPower(joystick.analogLV, joystick.analogRV, true);
         control_type = control_manual;
     }
 

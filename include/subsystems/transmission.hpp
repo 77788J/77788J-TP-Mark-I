@@ -43,6 +43,12 @@ namespace transmission {
             control_rotation
         };
 
+        // sides
+        enum Side {
+            side_intake,
+            side_shooter_flipper
+        };
+
         // variables
         extern float priority;
         extern float desired_power_left;
@@ -53,11 +59,13 @@ namespace transmission {
         extern float right_pos_inches;
         extern float left_vel;
         extern float right_vel;
+        extern Side front_side;
         extern ControlType control_type;
 
         // control functions
         void resetPosition();
         void resetOrientation();
+        void setFront(Side side);
         void setPowerLeft(float p);
         void setPowerRight(float p);
         void setPower(float p);
