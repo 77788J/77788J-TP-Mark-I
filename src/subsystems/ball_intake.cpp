@@ -63,8 +63,10 @@ namespace ball_intake {
         // stop macro if in macro and driven
         if (in_macro && (joystick.btn6U_new == 1 || joystick.btn8L_new == 1)) macros::stopMacro();
 
-        if (joystick.btn6U_new == 1) setDirection( 1 - abs(intake_dir)); // toggle positive
-        if (joystick.btn8L_new == 1) setDirection(-1 + abs(intake_dir)); // toggle negative
+        auto_load = false;
+        if (joystick.btn6U) setDirection(1); // intake override
+        else if (joystick.btn8L) setDirection(-1); // outtake override
+        else auto_load = true;
     }
 
     // update general ball intake controller
