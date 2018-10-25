@@ -73,11 +73,26 @@ namespace transmission::lift {
     void updateDriverControl() {
         
         // stop macro if in macro and driven
-        if (in_macro && (joystick.btn5U_new == 1 || joystick.btn5D_new == 1)) macros::stopMacro();
+        if (in_macro && (
+            joystick.btn5U_new == 1 || 
+            joystick.btn5D_new == 1 || 
+            joystick.btn7D_new == 1 || 
+            joystick.btn7R_new == 1 || 
+            joystick.btn7L_new == 1 || 
+            joystick.btn7U_new == 1
+        ))
+            macros::stopMacro();
 
+        // precise control
         if (joystick.btn5U_new == 1) gotoDegrees(MAX_ANGLE);
         if (joystick.btn5D_new == 1) gotoDegrees(MIN_ANGLE);
         if (joystick.btn5U_new == -1 || joystick.btn5D_new == -1) gotoDegrees(angle);
+
+        // function control
+        if (joystick.btn7D) {} // flip
+        if (joystick.btn7R) gotoDegrees(MIN_LEGAL_ANGLE); // flip
+        if (joystick.btn7L) gotoDegrees(MIN_ANGLE); // flip
+        if (joystick.btn7U) gotoDegrees(MAX_ANGLE); // flip
     }
     
     // update lift stats that don't fit in sensors

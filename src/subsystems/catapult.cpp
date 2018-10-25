@@ -51,15 +51,16 @@ namespace catapult {
     void updateDriverControl() {
         
         // stop macro if in macro and driven
-        if (in_macro && (joystick.btn8D_new == 1)) macros::stopMacro();
+        if (in_macro && (joystick.btn6U_new == 1 || joystick.btn6D_new == 1)) macros::stopMacro();
 
         // shoot catapult if button pressed
-        if (joystick.btn8D_new == 1) {
-            ball_intake::setDirection(-1);
-            delay(300);
+        if (joystick.btn6U_new == 1) {
+            ball_intake::getOutOfWay();
             fire();
-            ball_intake::setDirection(0);
         }
+
+        // shoot double shot
+        if (joystick.btn6D_new == 1) macros::startMacro(macros::macro_shoot_both_flags);
     }
 
     // update general catapult controller
