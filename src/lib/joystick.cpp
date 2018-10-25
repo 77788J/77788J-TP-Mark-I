@@ -3,10 +3,10 @@
 
 // default initializer
 Joystick :: Joystick() {
-  deadbandLH = 5;
-  deadbandLV = 5;
-  deadbandRH = 5;
-  deadbandRV = 5;
+  deadbandLH = 10;
+  deadbandLV = 10;
+  deadbandRH = 10;
+  deadbandRV = 10;
 }
 
 // "factory" that inits a Joystick
