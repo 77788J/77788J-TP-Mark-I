@@ -61,10 +61,10 @@ namespace ball_intake {
     void updateDriverControl() {
         
         // stop macro if in macro and driven
-        if (in_macro && (joystick.btn8D_new == 1 || joystick.btn8R_new == 1)) macros::stopMacro();
+        if (in_macro && (joystick.btn8L_new == 1 || joystick.btn8R_new == 1)) macros::stopMacro();
 
         auto_load = false;
-        if (joystick.btn8D) setDirection(1); // intake override
+        if (joystick.btn8L) setDirection(1); // intake override
         else if (joystick.btn8R) setDirection(-1); // outtake override
         else auto_load = true;
     }
