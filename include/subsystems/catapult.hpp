@@ -14,6 +14,7 @@ namespace catapult {
 
     // control data
     extern bool is_shooting;
+    extern bool is_loaded;
 
     // initialozer
     void init();

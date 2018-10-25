@@ -1,6 +1,7 @@
 #include "subsystems/catapult.hpp"
 #include "subsystems/ball_intake.hpp"
 #include "lib/motor_sensor/motor.hpp"
+#include "macros/macros.hpp"
 #include "controller.hpp"
 
 namespace catapult {
@@ -12,7 +13,10 @@ namespace catapult {
     Sensor limit_switch;
 
     // is the catapult currently shooting?
-    bool is_shooting;
+    bool is_shooting = false;
+
+    // is currently loaded?
+    bool is_loaded = false;
 
     // initialize motors, sensors, etc
     void init() {
@@ -23,9 +27,6 @@ namespace catapult {
 
         // init limit switch
         limit_switch.init(sensor_digital, 1, 0, false, 0, NULL, NULL);
-
-        // init control varaibles
-        is_shooting = false;
     }
 
     int time_since_shot = 0;
@@ -34,6 +35,7 @@ namespace catapult {
     void fire() {
         time_since_shot = 0;
         is_shooting = true;
+        is_loaded = false;
     }
     
     // wait until back in load position
@@ -49,7 +51,7 @@ namespace catapult {
     void updateDriverControl() {
         
         // stop macro if in macro and driven
-        if (in_macro && (joystick.btn8D_new == 1)) stopMacro();
+        if (in_macro && (joystick.btn8D_new == 1)) macros::stopMacro();
 
         // shoot catapult if button pressed
         if (joystick.btn8D_new == 1) {
