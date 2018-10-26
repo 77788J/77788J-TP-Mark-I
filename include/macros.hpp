@@ -17,6 +17,8 @@ namespace macros {
     // tells which macro is currently running
     extern Macro current_active;
 
+    void init();
+
     // starts a macro
     void startMacro(Macro macro);
 
@@ -24,8 +26,8 @@ namespace macros {
     void stopMacro();
 
     // macro functions (to run in tasks)
-    void shootBothFlags(void *);
-    void flipCap(void *);
+    void shootBothFlags();
+    void flipCap();
 
 }
 

@@ -169,16 +169,19 @@ namespace transmission::chassis {
         
         // stop macro if in macro and driven
         if (in_macro && (fabs(joystick.analogLV) > 0 || fabs(joystick.analogRV) > 0 || joystick.btn8D_new)) macros::stopMacro();
-        
-        // toggle front if correct buttons pressed
-        if (joystick.btn7L && joystick.btn7R_new == 1) setFront(front_side == side_intake ? side_shooter_flipper : side_intake);
 
-        // active/deactivate PID if applicable
-        if (joystick.btn8D_new == 1) moveDegrees(0.f);
-        if (!joystick.btn8D) control_type = control_manual;
+        if (!in_macro) {
+            
+            // toggle front if correct buttons pressed
+            if (joystick.btn7L && joystick.btn7R_new == 1) setFront(front_side == side_intake ? side_shooter_flipper : side_intake);
 
-        // drive chassis if applicable
-        if (control_type == control_manual) setPower(joystick.analogLV, joystick.analogRV, true);
+            // active/deactivate PID if applicable
+            if (joystick.btn8D_new == 1) moveDegrees(0.f);
+            if (!joystick.btn8D) control_type = control_manual;
+
+            // drive chassis if applicable
+            if (control_type == control_manual) setPower(joystick.analogLV, joystick.analogRV, true);
+        }
     }
 
     // update chassis stats that don't fit in sensors
@@ -205,7 +208,7 @@ namespace transmission::chassis {
         // set power based on PIDs
         switch (control_type) {
             case (control_manual): break;
-            case (control_position): setPower(position_pid_left.get(), position_pid_right.get()); break;
+            case (control_position): setPower(-position_pid_right.get(), -position_pid_left.get()); break;
             case (control_rotation): setPower(rotation_pid.get(), -rotation_pid.get()); break;
         }
     }

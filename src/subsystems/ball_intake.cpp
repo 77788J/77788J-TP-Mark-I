@@ -15,7 +15,7 @@ namespace ball_intake {
     // line tracker
     Sensor ball_identifier;
     float no_ball_light_level = 3000.f;
-    float yes_ball_light_level = 200.f;
+    float yes_ball_light_level = 500.f;
 
     // is there a ball in the intake?
     bool ball_identified = false;
@@ -52,9 +52,8 @@ namespace ball_intake {
 
     // moves current ball out of way of catapult
     void getOutOfWay() {
+        auto_load = false;
         setDirection(-1);
-        delay(500);
-        setDirection(0);
     }
 
     // update controller for driver control
@@ -63,10 +62,13 @@ namespace ball_intake {
         // stop macro if in macro and driven
         if (in_macro && (joystick.btn8L_new == 1 || joystick.btn8R_new == 1)) macros::stopMacro();
 
-        auto_load = false;
-        if (joystick.btn8L) setDirection(1); // intake override
-        else if (joystick.btn8R) setDirection(-1); // outtake override
-        else auto_load = true;
+        // auto_load = false;
+        // if (joystick.btn8L) setDirection(1); // intake override
+        // else if (joystick.btn8R) setDirection(-1); // outtake override
+        // else auto_load = true;
+
+        if (joystick.btn8L_new == 1) setDirection( 1 - abs(intake_dir)); // toggle positive
+        if (joystick.btn8R_new == 1) setDirection(-1 + abs(intake_dir)); // toggle negative
     }
 
     // update general ball intake controller
@@ -78,17 +80,17 @@ namespace ball_intake {
         ball_identified = (fabs(v - yes_ball_light_level) < fabs(v - no_ball_light_level));
 
         // auto-load if applicable
-        if (auto_load) {
+        // if (auto_load) {
 
-            // check if just loaded
-            if (!ball_identified && prev_identified) catapult::is_loaded = true;
+        //     // check if just loaded
+        //     if (!ball_identified && prev_identified) catapult::is_loaded = true;
 
-            // default to on
-            setDirection(1);
+        //     // default to on
+        //     setDirection(1);
 
-            // turn on if applicable
-            if (ball_identified && (catapult::is_loaded || !catapult::limit_switch.getValue(0))) setDirection(0);
-        }
+        //     // turn on if applicable
+        //     if (ball_identified && (catapult::is_loaded || !catapult::limit_switch.getValue(0))) setDirection(0);
+        // }
 
         // set physical motor
         all_motors[motor].setPower(100 * intake_dir, true);

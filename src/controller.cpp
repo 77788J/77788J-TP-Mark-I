@@ -2,6 +2,7 @@
 #include "main.hpp"
 #include "subsystems/subsystems.hpp"
 #include "lib/joystick.hpp"
+#include "macros.hpp"
 #include "lib/motor_sensor/motor.hpp"
 #include "lib/motor_sensor/sensor.hpp"
 
@@ -32,6 +33,7 @@ void sensorTask() {
     catapult::limit_switch.update(TASK_SENSOR_INTERVAL);
     chassis::gyro.update(TASK_SENSOR_INTERVAL);
     lift::pot.update(TASK_SENSOR_INTERVAL);
+    ball_intake::ball_identifier.update(TASK_SENSOR_INTERVAL);
 
     // general subsystem stats
     chassis::updateStats(TASK_CONTROL_INTERVAL);
@@ -85,4 +87,5 @@ void startAllTasks() {
     motor_task = taskRunLoop(motorTask, TASK_PHYSICAL_MOTOR_INTERVAL);
     control_task = taskRunLoop(controlTask, TASK_CONTROL_INTERVAL);
     debug_task = taskRunLoop(debugTask, TASK_DEBUG_INTERVAL);
+    macros::init();
 }

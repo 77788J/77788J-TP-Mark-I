@@ -76,7 +76,7 @@ void initialize() {
     transmission::init();
 
     // start all tasks
-    // startAllTasks();
+    startAllTasks();
 
     // start autonomous selection
     // selectAutonomous();

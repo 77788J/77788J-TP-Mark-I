@@ -97,13 +97,13 @@ namespace transmission {
         extern bool in_macro;
 
         // constants
-        #define BOTTOM_BAR_LEN 11.f
-        #define TOP_BAR_LEN 12.f
+        #define BOTTOM_BAR_LEN 12.5f
+        #define TOP_BAR_LEN 12.5f
         #define NEUTRAL_HEIGHT 19.f
-        #define MIN_ANGLE 0.f
-        #define MAX_LEGAL_ANGLE 50.f
-        #define DESCORE_ANGLE 200.f
-        #define MAX_ANGLE 400.f
+        #define MIN_ANGLE -160.f
+        #define MAX_LEGAL_ANGLE -60.f
+        #define DESCORE_ANGLE 0.f
+        #define MAX_ANGLE 190.f
 
         // sensors
         extern Sensor pot;

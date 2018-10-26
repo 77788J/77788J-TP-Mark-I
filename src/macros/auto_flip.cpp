@@ -1,20 +1,18 @@
 #include "macros.hpp"
+#include "math.h"
 #include "subsystems/subsystems.hpp"
 
 namespace macros {
-  void flipCap(void *) {
+  void flipCap() {
 
       // disable affected subsystems
       lift::in_macro = true;
 
       // raise lift
-      lift::gotoDegrees(MAX_LEGAL_ANGLE);
-      lift::waitForCompletion(10.f, 1);
+      lift::gotoDegrees(MAX_ANGLE);
+      while (lift::angle < MAX_LEGAL_ANGLE - 20) delay(5);
 
       // lower lift
       lift::gotoDegrees(MIN_ANGLE);
-
-      // restart task and re-enable all subsystems
-      stopMacro();
     }
 }

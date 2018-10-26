@@ -18,6 +18,8 @@ namespace catapult {
     // is currently loaded?
     bool is_loaded = false;
 
+    int prev_intake_dir = 0;
+
     // initialize motors, sensors, etc
     void init() {
 
@@ -36,6 +38,7 @@ namespace catapult {
         time_since_shot = 0;
         is_shooting = true;
         is_loaded = false;
+        ball_intake::setDirection(0);
     }
     
     // wait until back in load position
@@ -55,8 +58,10 @@ namespace catapult {
 
         // shoot catapult if button pressed
         if (joystick.btn6U_new == 1) {
-            ball_intake::getOutOfWay();
+            // ball_intake::getOutOfWay();
+            // delay(500);
             fire();
+            // ball_intake::auto_load = true;
         }
 
         // shoot double shot
@@ -71,6 +76,8 @@ namespace catapult {
             all_motors[motors].setPower(100, true);
             if (!limit_switch.getValue(0)) is_shooting = false;
         }
+
+        // if (limit_switch.getValue(0) && !limit_switch.getValue(1)) ball_intake::setDirection(prev_intake_dir);
 
         // if not shooting, only give full power when not at load angle
         else all_motors[motors].setPower((float) (10 + (!limit_switch.getValue(0)) * (65 + (float)(750 - time_since_shot) * 0.04666666666f)), true);

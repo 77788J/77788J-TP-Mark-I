@@ -2,7 +2,7 @@
 #include "subsystems/subsystems.hpp"
 
 namespace macros {
-  void shootBothFlags(void *) {
+  void shootBothFlags() {
 
       // disable affected subsystems
       chassis::in_macro = true;
@@ -15,14 +15,12 @@ namespace macros {
 
       // move forward and load catapult
       chassis::moveInches(36.f);
-      ball_intake::load(true);
-      chassis::waitForCompletion(25.f, 5);
+      while (!catapult::limit_switch.getValue(0)) delay(5);
+      ball_intake::setDirection(1);
+      chassis::waitForCompletion(25.f, 5000);
 
       // fire catapult again
       catapult::fire();
       while (catapult::is_shooting) delay(5);
-
-      // restart task and re-enable all subsystems
-      stopMacro();
     }
 }

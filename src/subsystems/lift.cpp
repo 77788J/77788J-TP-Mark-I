@@ -25,13 +25,13 @@ namespace transmission::lift {
     // calculate height of lift given specific angle
     float calcHeight(float angle) {
         float angle_rad = angle * (M_PI / 180.f); // convert to radians
-        return NEUTRAL_HEIGHT + sin(angle_rad) * BOTTOM_BAR_LEN + sin(angle_rad) * TOP_BAR_LEN; // calculate height
+        return NEUTRAL_HEIGHT + sin(angle_rad) * BOTTOM_BAR_LEN + sin(angle_rad * 2.f) * TOP_BAR_LEN; // calculate height
     }
 
     // calculate angle of lift given specified height
     float calcAngle(float height) {
-        float angle = asin((height - NEUTRAL_HEIGHT) / (BOTTOM_BAR_LEN + TOP_BAR_LEN)); // calculate angle
-        return angle * (180.f / M_PI); // convert to degrees
+        float a = asin((height - NEUTRAL_HEIGHT) / (BOTTOM_BAR_LEN + TOP_BAR_LEN)); // calculate angle
+        return a * (180.f / M_PI); // convert to degrees
     }
 
     // set power of lift
@@ -77,7 +77,8 @@ namespace transmission::lift {
         pot.init(sensor_potentiometer, 2, 0, false, 0, NULL, NULL);
 
         // init control algorithms
-        pid.init(MIN_ANGLE, 1.f, .001f, 10.f);
+        pid.init(MIN_ANGLE, 1.f, 0.f, 0.f);
+        pid.setTarget(MIN_ANGLE);
     }
 
     // update controller for driver control
@@ -111,9 +112,9 @@ namespace transmission::lift {
     
         // calculate angle and height
         float trans_pos = (all_motors[motor_top_left].getPosition() + all_motors[motor_btm_left].getPosition()) * .5f;
-        float new_pos = pot.getValue(0) * .2f + trans_pos * .8f;
+        float new_pos = trans_pos;
         vel = vel * .5f + (new_pos - angle) * .5f * 166.666666667f / time_delta;
-        angle = new_pos;
+        angle = new_pos + MIN_ANGLE;
         height = calcHeight(angle);
     }
 
