@@ -1,4 +1,5 @@
 #include "autons.hpp"
+#include "macros.hpp"
 #include "subsystems/subsystems.hpp"
 
 void autons::capSideDefault(int side, bool park) {
@@ -7,63 +8,81 @@ void autons::capSideDefault(int side, bool park) {
     // wait for catapult to be loaded
     while (!catapult::limit_switch.getValue(0)) delay(1);
 
+    ball_intake::setDirection(1);
+    delay(1000);
+
     // launch ball at middle flag
     catapult::fire();
     while (catapult::is_shooting) delay(1);
 
-    // drive forward
-    chassis::gotoInches(25.f);
-    chassis::waitForCompletion(10.f, 5000);
-
     // rotate to cap
-    chassis::rotateTo(-90.f);
-    chassis::waitForCompletion(10.f, 5000);
+    chassis::rotateTo(-90.f * angle_mult);
+    chassis::waitForCompletion(3.f, 1500);
 
-    // reset encoders
+    // move to cap and intake ball
     chassis::resetPosition();
-
-    // drive to cap and hopefully flip it
-    ball_intake::setDirection(-1);
-    chassis::gotoInches(50.f);
-    chassis::waitForCompletion(10.f, 5000);
+    ball_intake::setDirection(1);
+    chassis::moveInches(34.f);
+    chassis::waitForCompletion(20.f, 1500);
 
     // back up
-    ball_intake::setDirection(0);
-    chassis::gotoInches(34.f);
-    chassis::waitForCompletion(10.f, 5000);
+    chassis::gotoInches(0.f);
+    chassis::waitForCompletion(20.f, 1500);
 
     // rotate
-    chassis::rotateTo(-180.f);
-    chassis::waitForCompletion(10.f, 5000);
+    chassis::rotateTo(0.f);
+    chassis::waitForCompletion(3.f, 1500);
 
-    // move forward
-    chassis::moveInches(25.f);
-    chassis::waitForCompletion(10.f, 5000);
+    // move inline with cap
+    chassis::moveInches(-25.f);
+    chassis::waitForCompletion(20.f, 1500);
+
+    // shoot flag
+    catapult::fire();
+    while (catapult::is_shooting) delay(1);
 
     // rotate to cap
-    chassis::rotateTo(-90.f);
-    chassis::waitForCompletion(10.f, 5000);
+    chassis::rotateTo(90.f * angle_mult);
+    chassis::waitForCompletion(3.f, 1500);
 
-    // reset encoders
+    // go up to cap
+    chassis::moveInches(-10.f);
+    chassis::waitForCompletion(20.f, 1500);
+
+    // flip cap
+    macros::flipCap();
+    delay(500);
+
+    // rotate to 45 deg
+    chassis::rotateTo(-45.f * angle_mult);
+    chassis::waitForCompletion(3.f, 1750);
+
+    // move inline with flags
+    chassis::moveInches(-16.f);
+    chassis::waitForCompletion(20.f, 1500);
+
+    // rotate to flags
+    chassis::rotateTo(0.f);
+    chassis::waitForCompletion(3.f, 1000);
+
+    // flip bottom flag
     chassis::resetPosition();
+    chassis::gotoInches(-12.f);
+    chassis::waitForCompletion(20.f, 1500);
 
-    // move to cap
-    ball_intake::setDirection(1);
-    chassis::gotoInches(16.f);
-    chassis::waitForCompletion(10.f, 5000);
-
-    // back up
-    chassis::gotoInches(6.f);
-    chassis::waitForCompletion(10.f, 5000);
-
+    // park
     if (park) {
 
-        // rotate to tile
-        chassis::rotateTo(0.f);
-        chassis::waitForCompletion(10.f, 5000);
+        // back up inline with tile
+        chassis::gotoInches(59.f);
+        chassis::waitForCompletion(20.f, 3000);
 
-        // park
-        chassis::moveInches(23.f);
-        chassis::waitForCompletion(10.f, 5000);
+        // rotate to tile
+        chassis::rotateTo(-90.f * angle_mult);
+        chassis::waitForCompletion(3.f, 1000);
+
+        // move onto tile
+        chassis::moveInches(36.f);
     }
+    else chassis::gotoInches(36.f); // if not parking, just back up
 }

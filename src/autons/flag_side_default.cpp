@@ -1,82 +1,88 @@
 #include "autons.hpp"
+#include "macros.hpp"
 #include "subsystems/subsystems.hpp"
 
 void autons::flagSideDefault(int side, bool park) {
-    bool angle_mult = side ? 1.f : -1.f;
+    bool angle_mult = side ? -1.f : 1.f;
 
-    // start ball intake
+    // wait for catapult to be loaded
+    while (!catapult::limit_switch.getValue(0)) delay(1);
+
     ball_intake::setDirection(1);
-
-    // move to cap
-    chassis::moveInches(45.f);
-    chassis::waitForCompletion(10.f, 10000);
-
-    // start moving to shot pos
-    chassis::gotoInches(10.f);
-
-    // wait 1 second
     delay(1000);
-
-    // turn off ball intake and lower lift completely
-    ball_intake::setDirection(0);
-    lift::gotoDegrees(MIN_ANGLE);
-
-    // wait for chassis to be in position
-    chassis::waitForCompletion(10.f, 10000);
-
-    // rotate towards flags
-    chassis::rotateTo(90.f * angle_mult);
-    chassis::waitForCompletion(10.f, 5000);
-
-    // launch ball at top flag
-    catapult::fire();
-    delay(150);
-
-    // go up to middle flag
-    chassis::moveInches(-25.f);
-    chassis::waitForCompletion(10.f, 5000);
 
     // launch ball at middle flag
     catapult::fire();
-    delay(150);
+    while (catapult::is_shooting) delay(1);
 
-    // rotate to cap and open intake
-    chassis::rotateTo(0.f * angle_mult);
-    chassis::waitForCompletion(10.f, 5000);
+    // rotate to cap
+    chassis::rotateTo(-90.f * angle_mult);
+    chassis::waitForCompletion(3.f, 1500);
 
-    // reset relative position
+    // move to cap and intake ball
     chassis::resetPosition();
+    ball_intake::setDirection(1);
+    chassis::moveInches(34.f);
+    chassis::waitForCompletion(20.f, 1500);
 
-    // start ball intake in reverse (to flip cap)
-    ball_intake::setDirection(-1);
-
-    // move to cap
-    chassis::gotoInches(14.f);
-    chassis::waitForCompletion(10.f, 5000);
-
-    // move back in line with flags
+    // back up
     chassis::gotoInches(0.f);
-    chassis::waitForCompletion(10.f, 5000);
+    chassis::waitForCompletion(20.f, 1500);
 
-    // turn off ball intake
-    ball_intake::setDirection(0);
+    // rotate
+    chassis::rotateTo(0.f);
+    chassis::waitForCompletion(3.f, 1500);
 
+    // move inline with cap
+    chassis::moveInches(-25.f);
+    chassis::waitForCompletion(20.f, 1500);
+
+    // shoot flag
+    catapult::fire();
+    while (catapult::is_shooting) delay(1);
+
+    // rotate to cap
+    chassis::rotateTo(90.f * angle_mult);
+    chassis::waitForCompletion(3.f, 1500);
+
+    // go up to cap
+    chassis::moveInches(-10.f);
+    chassis::waitForCompletion(20.f, 1500);
+
+    // flip cap
+    macros::flipCap();
+    delay(500);
+
+    // rotate to 45 deg
+    chassis::rotateTo(-45.f * angle_mult);
+    chassis::waitForCompletion(3.f, 1750);
+
+    // move inline with flags
+    chassis::moveInches(-16.f);
+    chassis::waitForCompletion(20.f, 1500);
+
+    // rotate to flags
+    chassis::rotateTo(0.f);
+    chassis::waitForCompletion(3.f, 1000);
+
+    // flip bottom flag
+    chassis::resetPosition();
+    chassis::gotoInches(-12.f);
+    chassis::waitForCompletion(20.f, 1500);
+
+    // park
     if (park) {
 
-        // rotate to face away from flags
-        chassis::rotateTo(90.f * angle_mult);
-        chassis::waitForCompletion(10.f, 5000);
+        // back up inline with tile
+        chassis::gotoInches(59.f);
+        chassis::waitForCompletion(20.f, 3000);
 
-        // move in line with parking tiles
-        chassis::moveInches(50.f);
-        chassis::waitForCompletion(10.f, 10000);
+        // rotate to tile
+        chassis::rotateTo(-90.f * angle_mult);
+        chassis::waitForCompletion(3.f, 1000);
 
-        // rotate to face parking tile
-        chassis::rotateTo(0.f * angle_mult);
-        chassis::waitForCompletion(10.f, 5000);
-
-        // drive onto parking tile
-        chassis::moveInches(25.f);
-        chassis::waitForCompletion(10.f, 10000);
+        // move onto tile
+        chassis::moveInches(36.f);
     }
+    else chassis::gotoInches(36.f); // if not parking, just back up
 }

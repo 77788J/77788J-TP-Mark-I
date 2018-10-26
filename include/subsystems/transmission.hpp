@@ -103,7 +103,7 @@ namespace transmission {
         #define MIN_ANGLE -160.f
         #define MAX_LEGAL_ANGLE -60.f
         #define DESCORE_ANGLE 0.f
-        #define MAX_ANGLE 190.f
+        #define MAX_ANGLE 240.f
 
         // sensors
         extern Sensor pot;
