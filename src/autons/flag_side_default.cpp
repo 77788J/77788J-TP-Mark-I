@@ -9,7 +9,7 @@ void autons::flagSideDefault(int side, bool park) {
 
     // move to cap
     chassis::moveInches(45.f);
-    chassis::waitForCompletion(10.f, 10);
+    chassis::waitForCompletion(10.f, 10000);
 
     // start moving to shot pos
     chassis::gotoInches(10.f);
@@ -22,11 +22,11 @@ void autons::flagSideDefault(int side, bool park) {
     lift::gotoDegrees(MIN_ANGLE);
 
     // wait for chassis to be in position
-    chassis::waitForCompletion(10.f, 10);
+    chassis::waitForCompletion(10.f, 10000);
 
     // rotate towards flags
     chassis::rotateTo(90.f * angle_mult);
-    chassis::waitForCompletion(10.f, 5);
+    chassis::waitForCompletion(10.f, 5000);
 
     // launch ball at top flag
     catapult::fire();
@@ -34,7 +34,7 @@ void autons::flagSideDefault(int side, bool park) {
 
     // go up to middle flag
     chassis::moveInches(-25.f);
-    chassis::waitForCompletion(10.f, 5);
+    chassis::waitForCompletion(10.f, 5000);
 
     // launch ball at middle flag
     catapult::fire();
@@ -42,7 +42,7 @@ void autons::flagSideDefault(int side, bool park) {
 
     // rotate to cap and open intake
     chassis::rotateTo(0.f * angle_mult);
-    chassis::waitForCompletion(10.f, 5);
+    chassis::waitForCompletion(10.f, 5000);
 
     // reset relative position
     chassis::resetPosition();
@@ -52,11 +52,11 @@ void autons::flagSideDefault(int side, bool park) {
 
     // move to cap
     chassis::gotoInches(14.f);
-    chassis::waitForCompletion(10.f, 5);
+    chassis::waitForCompletion(10.f, 5000);
 
     // move back in line with flags
     chassis::gotoInches(0.f);
-    chassis::waitForCompletion(10.f, 5);
+    chassis::waitForCompletion(10.f, 5000);
 
     // turn off ball intake
     ball_intake::setDirection(0);
@@ -65,18 +65,18 @@ void autons::flagSideDefault(int side, bool park) {
 
         // rotate to face away from flags
         chassis::rotateTo(90.f * angle_mult);
-        chassis::waitForCompletion(10.f, 5);
+        chassis::waitForCompletion(10.f, 5000);
 
         // move in line with parking tiles
         chassis::moveInches(50.f);
-        chassis::waitForCompletion(10.f, 10);
+        chassis::waitForCompletion(10.f, 10000);
 
         // rotate to face parking tile
         chassis::rotateTo(0.f * angle_mult);
-        chassis::waitForCompletion(10.f, 5);
+        chassis::waitForCompletion(10.f, 5000);
 
         // drive onto parking tile
         chassis::moveInches(25.f);
-        chassis::waitForCompletion(10.f, 10);
+        chassis::waitForCompletion(10.f, 10000);
     }
 }
