@@ -15,6 +15,10 @@ void autons::capSideDefault(int side, bool park) {
     catapult::fire();
     while (catapult::is_shooting) delay(1);
 
+    // back up slightly
+    chassis::moveInches(4.f);
+    delay(250);
+
     // rotate to cap
     chassis::rotateTo(-90.f * angle_mult);
     chassis::waitForCompletion(3.f, 1500);
@@ -26,63 +30,43 @@ void autons::capSideDefault(int side, bool park) {
     chassis::waitForCompletion(20.f, 1500);
 
     // back up
-    chassis::gotoInches(0.f);
+    chassis::gotoInches(20.f);
     chassis::waitForCompletion(20.f, 1500);
 
-    // rotate
+    // rotate to back of field
     chassis::rotateTo(0.f);
-    chassis::waitForCompletion(3.f, 1500);
+    chassis::waitForCompletion(2.f, 1500);
 
     // move inline with cap
-    chassis::moveInches(-25.f);
+    chassis::moveInches(24.f);
     chassis::waitForCompletion(20.f, 1500);
 
-    // shoot flag
-    catapult::fire();
-    while (catapult::is_shooting) delay(1);
-
     // rotate to cap
-    chassis::rotateTo(90.f * angle_mult);
+    chassis::rotateTo(90.f);
     chassis::waitForCompletion(3.f, 1500);
 
-    // go up to cap
-    chassis::moveInches(-10.f);
+    // move to cap
+    chassis::resetPosition();
+    chassis::gotoInches(14.f);
     chassis::waitForCompletion(20.f, 1500);
 
     // flip cap
     macros::flipCap();
     delay(500);
 
-    // rotate to 45 deg
-    chassis::rotateTo(-45.f * angle_mult);
-    chassis::waitForCompletion(3.f, 1750);
-
-    // move inline with flags
-    chassis::moveInches(-16.f);
-    chassis::waitForCompletion(20.f, 1500);
-
-    // rotate to flags
-    chassis::rotateTo(0.f);
-    chassis::waitForCompletion(3.f, 1000);
-
-    // flip bottom flag
-    chassis::resetPosition();
-    chassis::gotoInches(-12.f);
-    chassis::waitForCompletion(20.f, 1500);
+    // move back
+    chassis::gotoInches(21.f);
+    delay(250);
 
     // park
     if (park) {
 
-        // back up inline with tile
-        chassis::gotoInches(59.f);
-        chassis::waitForCompletion(20.f, 3000);
+        // rotate to platform
+        chassis::rotateTo(180.f);
+        chassis::waitForCompletion(3.f, 1500);
 
-        // rotate to tile
-        chassis::rotateTo(-90.f * angle_mult);
-        chassis::waitForCompletion(3.f, 1000);
-
-        // move onto tile
-        chassis::moveInches(36.f);
+        // drive onto platform
+        chassis::moveInches(50.f);
+        chassis::waitForCompletion(20.f, 2000);
     }
-    else chassis::gotoInches(36.f); // if not parking, just back up
 }

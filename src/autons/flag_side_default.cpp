@@ -11,7 +11,7 @@ void autons::flagSideDefault(int side, bool park) {
     ball_intake::setDirection(1);
     delay(1000);
 
-    // launch ball at middle flag
+    // launch ball at top flag
     catapult::fire();
     while (catapult::is_shooting) delay(1);
 
