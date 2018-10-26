@@ -21,8 +21,8 @@ namespace macros {
   }
 
   void init() {
-    current_active = macro_none;
-    task = taskRunLoop(macroFunction, 10);
+    // current_active = macro_none;
+    // task = taskRunLoop(macroFunction, 10);
   }
   
   // starts a macro

@@ -3,6 +3,7 @@
 #include "subsystems/subsystems.hpp"
 
 void autons::flagSideDefault(int side, bool park) {
+    print("START");
     bool angle_mult = side ? -1.f : 1.f;
 
     // wait for catapult to be loaded

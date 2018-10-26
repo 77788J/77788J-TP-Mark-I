@@ -6,7 +6,7 @@ void autons::capSideDefault(int side, bool park) {
     bool angle_mult = side ? -1.f : 1.f;
 
     // wait for catapult to be loaded
-    while (!catapult::limit_switch.getValue(0)) delay(1);
+    while (!catapult::limit_switch.getValue(0)) delay(5);
 
     ball_intake::setDirection(1);
     delay(1000);
