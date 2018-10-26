@@ -103,8 +103,7 @@ namespace transmission::lift {
         // function control
         if (joystick.btn7D) macros::startMacro(macros::macro_flip_cap); // flip cap
         if (joystick.btn7R) gotoDegrees(MAX_LEGAL_ANGLE); // goto highest height under 18"
-        if (joystick.btn7L) gotoDegrees(MIN_ANGLE); // lower all the way
-        if (joystick.btn7U) gotoDegrees(MAX_ANGLE); // raise all the way
+        if (joystick.btn7U) gotoDegrees(DESCORE_ANGLE); // lower all the way
     }
     
     // update lift stats that don't fit in sensors
