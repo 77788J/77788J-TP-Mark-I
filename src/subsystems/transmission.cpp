@@ -11,12 +11,6 @@ namespace transmission {
     int motor_top_right;
     int motor_btm_right;
 
-    // sensors
-    Sensor ime_tl;
-    Sensor ime_bl;
-    Sensor ime_tr;
-    Sensor ime_br;
-
     // set priority ratio of chassis/lift
     // basically means that if both are meant to be given full power, 
     // this is the ratio of how power is distributed
@@ -34,14 +28,10 @@ namespace transmission {
         int port_bl[10] = {9};
         int port_tr[10] = {2};
         int port_br[10] = {3};
-        ime_tl.init(sensor_ime, 0, 0, false, IME_SPEED, NULL, NULL);
-        ime_bl.init(sensor_ime, 1, 0, false, IME_SPEED, NULL, NULL);
-        ime_tr.init(sensor_ime, 2, 0, false, IME_SPEED, NULL, NULL);
-        ime_br.init(sensor_ime, 3, 0, false, IME_SPEED, NULL, NULL);
-        motor_top_left = motorInit(port_tl, NULL, &ime_tl);
-        motor_btm_left = motorInit(port_bl, NULL, &ime_bl);
-        motor_top_right = motorInit(port_tr, NULL, &ime_tr);
-        motor_btm_right = motorInit(port_br, NULL, &ime_br);
+        motor_top_left = motorInit(port_tl, NULL, NULL);
+        motor_btm_left = motorInit(port_bl, NULL, NULL);
+        motor_top_right = motorInit(port_tr, NULL, NULL);
+        motor_btm_right = motorInit(port_br, NULL, NULL);
         all_motors[motor_top_left].reversed = true;
         all_motors[motor_btm_left].reversed = true;
 

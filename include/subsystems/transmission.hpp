@@ -101,15 +101,16 @@ namespace transmission {
         #define TOP_BAR_LEN 12.5f
         #define NEUTRAL_HEIGHT 19.f
         #define MIN_ANGLE -160.f
-        #define MAX_LEGAL_ANGLE -60.f
+        #define MAX_LEGAL_ANGLE -80.f
         #define DESCORE_ANGLE 0.f
-        #define MAX_ANGLE 240.f
+        #define MAX_ANGLE 300.f
 
-        // sensors
-        extern Sensor pot;
+        // pid
+        extern Pid pid;
 
         // control algorithms
-        extern Pid pid;
+        extern Sensor left_encoder;
+        extern Sensor right_encoder;
 
         // variables
         extern float desired_power;

@@ -3,8 +3,14 @@
 #include "subsystems/subsystems.hpp"
 #include "lib/autonomous_picker.hpp"
 #include "autons.hpp"
+// #include "watchdog.h"
 
 Lcd lcd;
+
+
+extern "C" {
+    void watchdogInit();
+}
 
 bool autons::selected = false;
 int autons::color = 0;
@@ -55,7 +61,9 @@ void selectAutonomous() {
     autons::park = selections[2];
 }
 
-void initializeIO() {}
+void initializeIO() {
+    watchdogInit();
+}
 
 void initialize() {
 
@@ -66,8 +74,8 @@ void initialize() {
     joystick.init(1);
 
     // turn on all IMEs
-    imeInitializeAll();
-    delay(250);
+    // imeInitializeAll();
+    // delay(250);
 
     // initialize subsystems
     ball_intake::init();
@@ -80,4 +88,6 @@ void initialize() {
 
     // start autonomous selection
     // selectAutonomous();
+
+    // printf("%f", version)
 }

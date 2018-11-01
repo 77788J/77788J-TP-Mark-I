@@ -684,6 +684,8 @@ Ultrasonic ultrasonicInit(unsigned char portEcho, unsigned char portPing);
  */
 void ultrasonicShutdown(Ultrasonic ult);
 
+// void watchdogInit();
+
 // -------------------- Custom sensor control functions --------------------
 
 // ---- I2C port control ----

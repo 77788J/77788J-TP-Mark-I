@@ -6,11 +6,14 @@
 #include "math.h"
 
 namespace transmission::lift {
+
+    float offset = MIN_ANGLE;
     
     bool in_macro = false;
 
     // sensors
-    Sensor pot;
+    Sensor left_encoder;
+    Sensor right_encoder;
 
     // control algorithms
     Pid pid;
@@ -74,7 +77,8 @@ namespace transmission::lift {
     void init() {
 
         // init sensors
-        pot.init(sensor_potentiometer, 2, 0, false, 0, NULL, NULL);
+        left_encoder.init(sensor_encoder, 6, 7, false, 1.f, NULL, NULL);
+        right_encoder.init(sensor_encoder, 8, 9, false, 1.f, NULL, NULL);
 
         // init control algorithms
         pid.init(MIN_ANGLE, 1.f, 0.f, 0.f);
@@ -110,15 +114,18 @@ namespace transmission::lift {
     void updateStats(int time_delta) {
     
         // calculate angle and height
-        float trans_pos = (all_motors[motor_top_left].getPosition() + all_motors[motor_btm_left].getPosition()) * .5f;
+        float trans_pos = (left_encoder.getValue(0) + right_encoder.getValue(0)) * .5f;
         float new_pos = trans_pos;
         vel = vel * .5f + (new_pos - angle) * .5f * 166.666666667f / time_delta;
-        angle = new_pos + MIN_ANGLE;
+        angle = new_pos + offset;
         height = calcHeight(angle);
+        printf("LIFT: %f\n", lift::angle);
     }
 
     // update general chassis controller
     void update(int time_delta) {
-        setPower(pid.get());
+        if (isEnabled() && !isAutonomous() && joystick.btn8U) setPower(-100);
+        else if (isEnabled() && !isAutonomous() && joystick.btn8U_new == -1) offset = MIN_ANGLE - angle;
+        else setPower(pid.get());
     }
 }

@@ -4,7 +4,7 @@
 namespace macros {
 
   // holds macro task
-  TaskHandle task;
+  TaskHandle task = NULL;
 
   // tells what macro is currently running
   Macro current_active = macro_none;
@@ -22,7 +22,7 @@ namespace macros {
 
   void init() {
     // current_active = macro_none;
-    // task = taskRunLoop(macroFunction, 10);
+    task = taskRunLoop(macroFunction, 10);
   }
   
   // starts a macro
@@ -35,7 +35,7 @@ namespace macros {
   void stopMacro() {
 
     // restart task
-    if (taskGetState(task) != TASK_DEAD) taskDelete(task);
+    if (task != NULL) taskDelete(task);
     task = taskRunLoop(macroFunction, 10);
 
     // re-enable subsystems
