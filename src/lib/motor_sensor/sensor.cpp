@@ -104,7 +104,7 @@ void Sensor :: update(int delta_time) {
 
     // quadrature sensor_encoder (deg)
     case (sensor_encoder): {
-      value = (float) encoderGet(encoder_sensor) * extra_data;
+      value = (float) encoderGet(encoder_sensor) / (float) extra_data;
       if (reversed) value *= -1.f; // reverse if reversed
     } break;
 
@@ -118,7 +118,7 @@ void Sensor :: update(int delta_time) {
 
     // sensor_potentiometer (deg)
     case (sensor_potentiometer): {
-      value = (float) analogRead(port1) * (260.f/4095.f) * extra_data;
+      value = (float) analogRead(port1) * (260.f/4095.f) / (float) extra_data;
       if (reversed) value = 260.f - value; // invert if reversed
     } break;
 

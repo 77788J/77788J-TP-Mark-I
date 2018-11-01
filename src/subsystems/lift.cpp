@@ -77,8 +77,8 @@ namespace transmission::lift {
     void init() {
 
         // init sensors
-        left_encoder.init(sensor_encoder, 6, 7, false, 1.f, NULL, NULL);
-        right_encoder.init(sensor_encoder, 8, 9, false, 1.f, NULL, NULL);
+        left_encoder.init(sensor_encoder, 6, 7, false, 4.f, NULL, NULL);
+        right_encoder.init(sensor_encoder, 8, 9, false, 4.f, NULL, NULL);
 
         // init control algorithms
         pid.init(MIN_ANGLE, 1.f, 0.f, 0.f);

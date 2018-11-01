@@ -45,14 +45,15 @@ void selectAutonomous() {
     while (current < 3) {
         int p;
         switch (current) {
-
             case (0): p = picker::loadItem(color_picker, &lcd); break;
             case (1): p = picker::loadItem(side_picker, &lcd); break;
             case (2): p = picker::loadItem(park_picker, &lcd); break;
+        }
 
-            if (p == -1) --current;
-            else selections[current] = p;
-
+        if (p == -1 && current > 0) --current;
+        else {
+            selections[current] = p;
+            ++current;
         }
     }
 
@@ -88,6 +89,4 @@ void initialize() {
 
     // start autonomous selection
     // selectAutonomous();
-
-    // printf("%f", version)
 }

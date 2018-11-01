@@ -159,8 +159,8 @@ namespace transmission::chassis {
         gyro.init(sensor_gyro, 1, 0, false, 196.f, NULL, NULL);
 
         // init control algorithms
-        position_pid_left.init(0.f, 1.f, 0.f, 0.f);
-        position_pid_right.init(0.f, 1.f, 0.f, 0.f);
+        position_pid_left.init(0.f, 1.5f, 0.f, 0.f);
+        position_pid_right.init(0.f, 1.5f, 0.f, 0.f);
         rotation_pid.init(0.f, 1.f, 0.f, 0.f);
     }
 

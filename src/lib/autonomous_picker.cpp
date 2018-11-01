@@ -26,7 +26,7 @@ namespace autonomous_picker {
       case (0): return item.id; break;
 
       // if there's only 1 option, return that option
-      case (1): return loadItem(*item.submenu, lcd);
+      case (1): return loadItem(*item.submenu, lcd); break;
 
       // if there's 2 options, map each button to one option, and one button to back
       case (2): {
@@ -73,12 +73,12 @@ namespace autonomous_picker {
         // make top row say current item's title
         char top_text[16];
         centerText(item.title, 16, top_text);
-        lcd->setText(0, top_text);
 
         // loop until an option is selected
         while (choice != lcd_button_middle) {
 
           lcdClear(uart1);
+          lcd->setText(0, top_text);
 
           // make bottom row display the currently visible option and arrows/whitespace for left/right
           if (current_option == -1) lcd->setText(1, "      BACK     >"); // update LCD text to 'BACK' visibly
