@@ -88,5 +88,5 @@ void initialize() {
     startAllTasks();
 
     // start autonomous selection
-    // selectAutonomous();
+    selectAutonomous();
 }
