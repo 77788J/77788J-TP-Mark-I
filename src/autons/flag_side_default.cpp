@@ -16,74 +16,100 @@ void autons::flagSideDefault(int side, bool park) {
     catapult::fire();
     while (catapult::is_shooting) delay(1);
 
+    chassis::gotoInches(6.f);
+    chassis::waitForCompletion(10.f, 500);
+
     // rotate to cap
-    chassis::rotateTo(-90.f * angle_mult);
-    chassis::waitForCompletion(3.f, 1500);
+    chassis::rotateTo(-95.f * angle_mult);
+    chassis::waitForCompletion(1.f, 1500);
+
+    delay(150);
 
     // move to cap and intake ball
     chassis::resetPosition();
     ball_intake::setDirection(1);
-    chassis::moveInches(34.f);
-    chassis::waitForCompletion(20.f, 1500);
+    chassis::gotoInches(-42.f);
+    chassis::waitForCompletion(2.f, 1500);
+
+    delay(500);
 
     // back up
-    chassis::gotoInches(0.f);
-    chassis::waitForCompletion(20.f, 1500);
+    chassis::gotoInches(18.f);
+    chassis::waitForCompletion(2.f, 1500);
+
+    // move forward a bit
+    chassis::gotoInches(4.f);
+    chassis::waitForCompletion(2.f, 1500);
 
     // rotate
-    chassis::rotateTo(0.f);
-    chassis::waitForCompletion(3.f, 1500);
+    chassis::rotateTo(6.f * angle_mult);
+    chassis::waitForCompletion(1.f, 1500);
 
-    // move inline with cap
-    chassis::moveInches(-25.f);
-    chassis::waitForCompletion(20.f, 1500);
+    delay(250);
+
+    // move up
+    chassis::moveInches(24.f);
+    chassis::waitForCompletion(4.f, 1500);
+
+    // align
+    chassis::rotateTo(6.f * angle_mult);
+    delay(750);
 
     // shoot flag
     catapult::fire();
     while (catapult::is_shooting) delay(1);
 
-    // rotate to cap
-    chassis::rotateTo(90.f * angle_mult);
-    chassis::waitForCompletion(3.f, 1500);
+    // turn a bit
+    chassis::rotateTo(15.f * angle_mult);
+    delay(1000);
 
-    // go up to cap
-    chassis::moveInches(-10.f);
-    chassis::waitForCompletion(20.f, 1500);
+    // ram into flag
+    chassis::moveInches(22.f);
+    chassis::waitForCompletion(2.f, 1000);
+    chassis::moveInches(0.f);
 
-    // flip cap
-    macros::flipCap();
-    delay(500);
+    // // rotate to cap
+    // chassis::rotateTo(90.f * angle_mult);
+    // chassis::waitForCompletion(3.f, 1500);
 
-    // rotate to 45 deg
-    chassis::rotateTo(-45.f * angle_mult);
-    chassis::waitForCompletion(3.f, 1750);
+    // // go up to cap
+    // chassis::moveInches(-10.f);
+    // chassis::waitForCompletion(20.f, 1500);
 
-    // move inline with flags
-    chassis::moveInches(-16.f);
-    chassis::waitForCompletion(20.f, 1500);
+    // // flip cap
+    // macros::flipCap();
+    // delay(500);
 
-    // rotate to flags
-    chassis::rotateTo(0.f);
-    chassis::waitForCompletion(3.f, 1000);
+    // // rotate to 45 deg
+    // chassis::rotateTo(-45.f * angle_mult);
+    // chassis::waitForCompletion(3.f, 1750);
 
-    // flip bottom flag
-    chassis::resetPosition();
-    chassis::gotoInches(-12.f);
-    chassis::waitForCompletion(20.f, 1500);
+    // // move inline with flags
+    // chassis::moveInches(-16.f);
+    // chassis::waitForCompletion(20.f, 1500);
 
-    // park
-    if (park) {
+    // // rotate to flags
+    // chassis::rotateTo(0.f);
+    // chassis::waitForCompletion(3.f, 1000);
 
-        // back up inline with tile
-        chassis::gotoInches(59.f);
-        chassis::waitForCompletion(20.f, 3000);
+    // // flip bottom flag
+    // chassis::resetPosition();
+    // chassis::gotoInches(-12.f);
+    // chassis::waitForCompletion(20.f, 1500);
 
-        // rotate to tile
-        chassis::rotateTo(-90.f * angle_mult);
-        chassis::waitForCompletion(3.f, 1000);
+    // // park
+    // if (park) {
 
-        // move onto tile
-        chassis::moveInches(36.f);
-    }
-    else chassis::gotoInches(36.f); // if not parking, just back up
+    //     // back up inline with tile
+    //     chassis::gotoInches(59.f);
+    //     chassis::waitForCompletion(20.f, 3000);
+
+    //     // rotate to tile
+    //     chassis::rotateTo(-90.f * angle_mult);
+    //     chassis::waitForCompletion(3.f, 1000);
+
+    //     // move onto tile
+    //     chassis::moveInches(36.f);
+    // }
+    // else chassis::gotoInches(36.f); // if not parking, just back up
 }

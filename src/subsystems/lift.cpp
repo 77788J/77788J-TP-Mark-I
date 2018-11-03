@@ -81,7 +81,7 @@ namespace transmission::lift {
         right_encoder.init(sensor_encoder, 8, 9, false, 4.f, NULL, NULL);
 
         // init control algorithms
-        pid.init(MIN_ANGLE, 1.f, 0.f, 0.f);
+        pid.init(MIN_ANGLE, 4.6f, 0.f, 4.2f);
         pid.setTarget(MIN_ANGLE);
     }
 
@@ -114,12 +114,10 @@ namespace transmission::lift {
     void updateStats(int time_delta) {
     
         // calculate angle and height
-        float trans_pos = (left_encoder.getValue(0) + right_encoder.getValue(0)) * .5f;
-        float new_pos = trans_pos;
+        float new_pos = (left_encoder.getValue(0) + right_encoder.getValue(0)) * .5f + offset;
         vel = vel * .5f + (new_pos - angle) * .5f * 166.666666667f / time_delta;
-        angle = new_pos + offset;
+        angle = new_pos;
         height = calcHeight(angle);
-        printf("LIFT: %f\n", lift::angle);
     }
 
     // update general chassis controller

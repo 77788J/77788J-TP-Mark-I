@@ -18,6 +18,10 @@ extern "C" {
 #define SONAR_MIN 3.f
 #define SONAR_MAX 300.f
 
+// sonar conversion factors
+#define CM_TO_IN_FACTOR 0.3937007874f
+#define CM_TO_FT_FACTOR 0.03280839895f
+
 // calculates the acceleration of a value given its history
 float calcAccel(float *history, float prev_vel, float prev_accel, int delta_time);
 
@@ -50,6 +54,7 @@ public:
   // > gear ratio for potentiometer/encoder (2 is speed, 1/2 is torque)
   // > internal motor gear config for ime
   // > scale for gyro
+  // > conversion factor for sonar
   float extra_data;
 
   // sensor objects for special sensors

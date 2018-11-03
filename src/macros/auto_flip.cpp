@@ -12,8 +12,10 @@ namespace macros {
       lift::in_macro = true;
 
       // raise lift
-      lift::gotoDegrees(MAX_ANGLE);
-      while (lift::angle < MAX_LEGAL_ANGLE - 20 + (extra ? 15 : 0)) delay(5);
+      // lift::gotoDegrees(MAX_ANGLE);
+      // while ((lift::vel == 0) || (lift::angle + lift::vel * .005999999999999995f * 1250.f < MAX_LEGAL_ANGLE)) delay(5);
+      lift::gotoDegrees(MAX_LEGAL_ANGLE);
+      lift::waitForCompletion(5.f, 750);
 
       // lower lift
       lift::gotoDegrees(MIN_ANGLE);

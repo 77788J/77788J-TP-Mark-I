@@ -17,9 +17,11 @@ namespace macros {
       chassis::moveInches(36.f);
       while (!catapult::limit_switch.getValue(0)) delay(5);
       ball_intake::setDirection(1);
-      chassis::waitForCompletion(25.f, 5000);
+      chassis::waitForCompletion(25.f, 1000);
 
       // fire catapult again
+      ball_intake::setDirection(0);
+      delay(250);
       catapult::fire();
       while (catapult::is_shooting) delay(5);
     }

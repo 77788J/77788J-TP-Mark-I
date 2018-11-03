@@ -75,7 +75,6 @@ void controlTask() {
 
     // general control
     ball_intake::update();
-    // cap_manipulator::update(TASK_CONTROL_INTERVAL);
     catapult::update(TASK_CONTROL_INTERVAL);
     chassis::update(TASK_CONTROL_INTERVAL);
     lift::update(TASK_CONTROL_INTERVAL);

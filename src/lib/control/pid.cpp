@@ -39,7 +39,7 @@ float Pid :: update(float current, float given_vel, float time_delta) {
 
   // calculate P, and D
   float p = error * kp;
-  float d = -vel * kd / time_delta;
+  float d = -vel * kd;
 
   // integrate if necessary
   if (anti_windup_threshold == 0 || fabs(vel) < anti_windup_threshold) integral += error / time_delta;

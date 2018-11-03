@@ -30,6 +30,7 @@ namespace transmission {
         
         // sensors
         extern Sensor gyro;
+        extern Sensor sonar;
 
         // control algorithms
         extern Pid position_pid_left;
@@ -100,10 +101,10 @@ namespace transmission {
         #define BOTTOM_BAR_LEN 12.5f
         #define TOP_BAR_LEN 12.5f
         #define NEUTRAL_HEIGHT 19.f
-        #define MIN_ANGLE -160.f
-        #define MAX_LEGAL_ANGLE -80.f
-        #define DESCORE_ANGLE 0.f
-        #define MAX_ANGLE 300.f
+        #define MIN_ANGLE -42.f
+        #define MAX_LEGAL_ANGLE -24.f
+        #define DESCORE_ANGLE -15.f
+        #define MAX_ANGLE 41.f
 
         // pid
         extern Pid pid;

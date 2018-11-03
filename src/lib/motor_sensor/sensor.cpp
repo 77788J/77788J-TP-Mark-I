@@ -100,6 +100,7 @@ void Sensor :: update(int delta_time) {
     case (sensor_sonar): {
       value = ultrasonicGet(sonar_sensor);
       if (reversed) value = SONAR_MAX - value + SONAR_MIN; // invert if reversed
+      value *= extra_data;
     } break;
 
     // quadrature sensor_encoder (deg)

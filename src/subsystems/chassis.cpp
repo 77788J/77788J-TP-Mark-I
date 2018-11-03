@@ -15,6 +15,7 @@ namespace transmission::chassis {
 
     // sensors
     Sensor gyro;
+    Sensor sonar;
     Sensor left_enc;
     Sensor right_enc;
 
@@ -157,11 +158,12 @@ namespace transmission::chassis {
 
         // init sensors
         gyro.init(sensor_gyro, 1, 0, false, 196.f, NULL, NULL);
+        // sonar.init(sensor_sonar, 10, 11, false, CM_TO_IN_FACTOR, NULL, NULL);
 
         // init control algorithms
         position_pid_left.init(0.f, 1.5f, 0.f, 0.f);
         position_pid_right.init(0.f, 1.5f, 0.f, 0.f);
-        rotation_pid.init(0.f, 1.f, 0.f, 0.f);
+        rotation_pid.init(0.f, 10.f, 0.f, 5.5f);
     }
 
     // update controller for driver control
@@ -188,15 +190,15 @@ namespace transmission::chassis {
     void updateStats(int time_delta) {
     
         // calculate left side stats
-        float trans_pos = (-all_motors[motor_top_left].getPosition() + all_motors[motor_btm_left].getPosition()) * .5f;
-        float new_pos = all_motors[motor_left].getPosition() * .5f + trans_pos * .5f;
+        // float trans_pos = (-all_motors[motor_top_left].getPosition() + all_motors[motor_btm_left].getPosition()) * .5f;
+        float new_pos = all_motors[motor_left].getPosition();
         left_vel = left_vel * .5f + (new_pos - left_pos_deg) * .5f * 166.666666667f / time_delta;
         left_pos_deg = new_pos - left_pos_offset;
         left_pos_inches = WHEEL_SIZE * M_PI * left_pos_deg / 360.f;
 
         // calculate right side stats
-        trans_pos = (-all_motors[motor_top_right].getPosition() + all_motors[motor_btm_right].getPosition()) * .5f;
-        new_pos = all_motors[motor_right].getPosition() * .5f + trans_pos * .5f;
+        // trans_pos = (-all_motors[motor_top_right].getPosition() + all_motors[motor_btm_right].getPosition()) * .5f;
+        new_pos = all_motors[motor_right].getPosition();
         right_vel = right_vel * .5f + (new_pos - right_pos_deg) * .5f * 166.666666667f / time_delta;
         right_pos_deg = new_pos - right_pos_offset;
         right_pos_inches = WHEEL_SIZE * M_PI * right_pos_deg / 360.f;
@@ -209,7 +211,7 @@ namespace transmission::chassis {
         switch (control_type) {
             case (control_manual): break;
             case (control_position): setPower(-position_pid_right.get(), -position_pid_left.get()); break;
-            case (control_rotation): setPower(rotation_pid.get(), -rotation_pid.get()); break;
+            case (control_rotation): setPower(-rotation_pid.get(), rotation_pid.get()); break;
         }
     }
 }
