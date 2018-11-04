@@ -2,7 +2,7 @@
 #include "macros.hpp"
 #include "subsystems/subsystems.hpp"
 
-void autons::flagSideDefault(int side, bool park) {
+void autons::flagSideRed(int side, bool park) {
     print("START");
 
     // wait for catapult to be loaded
@@ -19,7 +19,7 @@ void autons::flagSideDefault(int side, bool park) {
     chassis::waitForCompletion(10.f, 500);
 
     // rotate to cap
-    chassis::rotateTo(-90.f);
+    chassis::rotateTo(90.f);
     chassis::waitForCompletion(1.f, 1500);
 
     delay(150);
@@ -59,7 +59,7 @@ void autons::flagSideDefault(int side, bool park) {
     while (catapult::is_shooting) delay(1);
 
     // turn a bit
-    chassis::rotateTo(-19.f);
+    chassis::rotateTo(22.f);
     delay(1000);
 
     // ram into flag

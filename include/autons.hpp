@@ -13,7 +13,7 @@ namespace autons {
 
     void flagSideDefault(int side, bool park);
     void capSideDefault(int side, bool park);
-    void kyleCompliment(int side);
+    void flagSideRed(int side, bool park);
 
 }
 

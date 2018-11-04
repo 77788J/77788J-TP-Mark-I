@@ -16,4 +16,6 @@ void flagOnly() {
 void autonomous() {
     startAllTasks();
     autons::flagSideDefault(1, true);
+    // autons::flagSideRed(1, true);
+    // flagOnly();
 }
